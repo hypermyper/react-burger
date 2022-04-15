@@ -1,0 +1,19 @@
+.section {
+  flex-direction: column;
+  align-items: flex-end;
+  box-sizing: border-box;  
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 464px;
+  overflow-y: scroll;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;  
+}

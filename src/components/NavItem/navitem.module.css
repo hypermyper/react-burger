@@ -1,0 +1,10 @@
+.link {
+  text-decoration: none;
+  color: #8585ad;
+  display: flex;
+  text-align: center;  
+}
+
+.link:hover, .link_active {
+  color: white;
+}

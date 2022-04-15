@@ -1,0 +1,41 @@
+header {
+  background-color: #1C1C21;
+  height: 88px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+}
+
+.nav {
+  width: 1280px;
+  display: flex;
+}
+
+.nav__item {
+  flex: 1;
+  display: flex;  
+  align-items: center;  
+  padding: 0; 
+}
+
+.nav__item_li {
+  list-style-type: none;
+}
+
+.links {
+  composes: nav__item;
+  justify-content: flex-start; 
+}
+
+.account {
+  composes: nav__item;
+  justify-content: flex-end;  
+}
+
+.logo {
+  composes: nav__item;  
+  justify-content: center;  
+}

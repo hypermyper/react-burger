@@ -1,0 +1,5 @@
+.section {
+  flex-direction: column;
+  align-items: flex-end;
+  box-sizing: border-box;  
+}

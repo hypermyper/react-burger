@@ -1,0 +1,21 @@
+.main {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-gap: 40px;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 300px;
+}
+::-webkit-scrollbar-track {
+  background: #2f2f37;
+  height: 300px;
+}
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border: 2px solid #2f2f37;
+  border-radius: 6px;
+}
