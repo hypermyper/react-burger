@@ -3,3 +3,12 @@
   align-items: flex-end;
   box-sizing: border-box;  
 }
+
+.tab {
+  display: flex;
+}
+
+.content {
+  overflow-y: scroll;
+  max-height: 664px;  
+}

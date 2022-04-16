@@ -3,6 +3,7 @@
   color: #8585ad;
   display: flex;
   text-align: center;  
+  transition: all .3s ease-in;
 }
 
 .link:hover, .link_active {

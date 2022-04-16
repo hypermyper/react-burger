@@ -8,7 +8,7 @@ import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstruc
 function Main(props) {
   return (
     <main className={clsx('pl-10 pr-10', styles.main)}>
-      <BurgerIngredients />
+      <BurgerIngredients data={props.data} />
       <BurgerConstructor data={props.data} />
     </main>
   );
