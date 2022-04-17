@@ -1,30 +1,38 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerconstructor.module.css';
 
-function BurgerConstructor(props) {
+const dataPropTypes = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired
+});
+
+function BurgerConstructor({ data }) {
   return (
     <section className={clsx(styles.section, 'pt-25', 'pl-4')}>
       <div className={clsx('pl-8', styles.bun_section)}>
-        {props.data.map((burger, index) => (
+        {data.map((burger, index) => (
             (burger.type == 'bun') && (index == 0) && <ConstructorElement 
               type="top"
               isLocked={true}
-              key={index}
-              text={burger.name}
+              text={burger.name + ' (верх)'}
               thumbnail={burger.image}
               price={burger.price}
+              key={burger._id}
             />
           ))}        
       </div>
       <ul className={clsx(styles.content, 'mt-4', 'mb-4')}>
-        {props.data.map((burger, index) => (
+        {data.map((burger) => (
           (burger.type !== 'bun') && 
-          <li className={clsx(styles.content_list)} >
+          <li className={clsx(styles.content_list)} key={burger._id}>
             <DragIcon type="primary" />
             <ConstructorElement 
-              key={index}
               text={burger.name}
               thumbnail={burger.image}
               price={burger.price}
@@ -33,14 +41,14 @@ function BurgerConstructor(props) {
         ))}
       </ul>    
       <div className={clsx('pl-8', styles.bun_section)}>
-        {props.data.map((burger, index) => (
+        {data.map((burger, index) => (
             (burger.type == 'bun') && (index == 0) && <ConstructorElement 
               type="bottom"
               isLocked={true}
-              key={index}
-              text={burger.name}
+              text={burger.name + ' (низ)'}
               thumbnail={burger.image}
               price={burger.price}
+              key={burger._id}
             />
           ))}   
       </div>  
@@ -52,6 +60,10 @@ function BurgerConstructor(props) {
       </div>     
     </section>
   )
+}
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(dataPropTypes).isRequired
 }
 
 export default BurgerConstructor;

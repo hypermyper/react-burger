@@ -1,11 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
+import propTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgeringredients.module.css';
 import BurgerIngredientsSecton from '../../components/BurgerIngredientsSecton/BurgerIngredientsSection';
-import BurgerElement from '../../components/BurgerElement/BurgerElement';
 
-function BurgerIngredients(props) {
+function BurgerIngredients({ data }) {
 
   const [current, setCurrent] = React.useState('Булки');
 
@@ -25,17 +25,17 @@ function BurgerIngredients(props) {
       </div>
       <section className={clsx(styles.content, 'mb-4')}>
         <BurgerIngredientsSecton 
-          data={props.data} 
+          data={data} 
           title="Булки" 
           type="bun"
         />
         <BurgerIngredientsSecton 
-          data={props.data} 
+          data={data} 
           title="Соусы" 
           type="sauce" 
         />
         <BurgerIngredientsSecton 
-          data={props.data} 
+          data={data} 
           title="Начинки" 
           type="main" 
         />

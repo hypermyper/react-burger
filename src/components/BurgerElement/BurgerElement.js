@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 import styles from './burgerelement.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -10,6 +11,12 @@ function BurgerElement(props) {
       <p className={clsx('text', 'text_type_main-default')}>{props.text}</p>
     </li>
   )
+}
+
+BurgerElement.propTypes = {
+  thumbnail: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired
 }
 
 export default BurgerElement;
