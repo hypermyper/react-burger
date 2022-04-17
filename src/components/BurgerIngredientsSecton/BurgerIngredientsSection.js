@@ -1,6 +1,16 @@
 import clsx from 'clsx';
 import styles from './burgeringredientssection.module.css';
+import PropTypes from 'prop-types';
 import BurgerElement from '../../components/BurgerElement/BurgerElement';
+
+const dataPropTypes = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired
+});
+
 
 function BurgerIngredientsSecton(props) {
   return (
@@ -18,6 +28,12 @@ function BurgerIngredientsSecton(props) {
       </ul> 
     </>
   )
+}
+
+BurgerIngredientsSecton.propTypes = {
+  data: PropTypes.arrayOf(dataPropTypes).isRequired,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 }
 
 export default BurgerIngredientsSecton;
