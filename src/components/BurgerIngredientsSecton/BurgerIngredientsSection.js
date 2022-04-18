@@ -2,15 +2,7 @@ import clsx from 'clsx';
 import styles from './burgeringredientssection.module.css';
 import PropTypes from 'prop-types';
 import BurgerElement from '../../components/BurgerElement/BurgerElement';
-
-const dataPropTypes = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  _id: PropTypes.string.isRequired
-});
-
+import dataPropTypes from '../../utils/types';
 
 function BurgerIngredientsSecton(props) {
   return (

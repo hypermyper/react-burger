@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerconstructor.module.css';
-
-const dataPropTypes = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  _id: PropTypes.string.isRequired
-});
+import dataPropTypes from '../../utils/types';
 
 function BurgerConstructor({ data }) {
   return (
@@ -29,7 +22,7 @@ function BurgerConstructor({ data }) {
       </div>
       <ul className={clsx(styles.content, 'mt-4', 'mb-4')}>
         {data.map((burger) => (
-          (burger.type !== 'bun') && 
+          (burger.type != 'bun') && 
           <li className={clsx(styles.content_list)} key={burger._id}>
             <DragIcon type="primary" />
             <ConstructorElement 
