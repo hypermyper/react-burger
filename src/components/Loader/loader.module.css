@@ -1,0 +1,8 @@
+.loader {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 88px);
+}

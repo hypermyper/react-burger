@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import OrderDetails from '../../components/OrderDetails/OrderDetails';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerconstructor.module.css';
 import dataPropTypes from '../../utils/types';
 
-function BurgerConstructor({ data }) {
+function BurgerConstructor({ data, setModal }) {
+
+	const handleOpenModal = () => {
+		setModal({
+			visible: true,
+			content: <OrderDetails orderNumber={123456}/>
+		})
+	}  
+
   return (
     <section className={clsx(styles.section, 'pt-25', 'pl-4')}>
       <div className={clsx('pl-8', styles.bun_section)}>
@@ -47,7 +56,7 @@ function BurgerConstructor({ data }) {
       </div>  
       <div className={clsx(styles.total, 'pt-10')}>
         <span className={clsx(styles.price, 'mr-10', 'text_type_digits-medium')}>2610 <CurrencyIcon type="primary" /></span>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={handleOpenModal}>
           Оформить заказ
         </Button>
       </div>     
