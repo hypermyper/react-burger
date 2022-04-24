@@ -4,9 +4,24 @@ import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgeringredients.module.css';
 import BurgerIngredientsSecton from '../../components/BurgerIngredientsSecton/BurgerIngredientsSection';
+import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
 import dataPropTypes from '../../utils/types';
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients({ data, setModal }) {
+
+  const handleOpenModal = (element) => {
+    setModal({
+      visible: true,
+      content: <IngredientDetails
+        name={element.name}
+        image={element.image_large}              
+        calories={element.calories}
+        proteins={element.proteins}        
+        fat={element.fat}        
+        carbohydrates={element.carbohydrates}              
+      />
+    });
+  }
 
   const [current, setCurrent] = React.useState('Булки');
 
@@ -29,16 +44,19 @@ function BurgerIngredients({ data }) {
           data={data} 
           title="Булки" 
           type="bun"
+          handleOpenModal={handleOpenModal}
         />
         <BurgerIngredientsSecton 
           data={data} 
           title="Соусы" 
           type="sauce" 
+          handleOpenModal={handleOpenModal}          
         />
         <BurgerIngredientsSecton 
           data={data} 
           title="Начинки" 
           type="main" 
+          handleOpenModal={handleOpenModal}          
         />
       </section>              
     </section>
@@ -46,7 +64,8 @@ function BurgerIngredients({ data }) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes).isRequired
+  data: PropTypes.arrayOf(dataPropTypes).isRequired,
+  setModal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;
