@@ -2,7 +2,8 @@ import React from 'react';
 import AppHeader from '../../components/AppHeader/AppHeader';
 import Main from '../../components/Main/Main';
 import Loader from '../../components/Loader/Loader.js';
-import { API_URL } from '../../utils/constants';
+//import { API_URL } from '../../utils/constants';
+import { getIngredients } from '../../utils/api';
 import { BurgerContext } from '../../utils/appContext';
 import clsx from 'clsx';
 
@@ -15,30 +16,18 @@ function App() {
   });
 
 React.useEffect(() => {
-  const getIngredients = async () => {
-    try { 
-      setState({...state, hasError: false, isLoading: true });
-      const response = await fetch(`${API_URL}ingredients`);
-      if (!response.ok) {
-        throw new Error("response is not ok");
-      }
-      const data = await response.json();
-      if (data && data.success === true) {          
+  setState({...state, hasError: false, isLoading: true });
+    getIngredients()
+      .then((data) => {          
         setState({...state, 
           data: data.data,
           burgerIngredients: data.data,
           isLoading: false})         
-      } else {
-        throw new Error("DataError");
-      }
-    }
-    catch (e) {
-      console.log(e);
-      setState({...state, hasError: true, isLoading: false})
-    }
-  }
-  getIngredients();
-}, []);  
+      })
+      .catch((err) => {
+        setState({...state, hasError: true, isLoading: false})
+      })
+    }, []);  
 
 const { data, isLoading, hasError } = state;
 

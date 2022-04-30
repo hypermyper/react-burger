@@ -5,27 +5,12 @@ import OrderDetails from '../../components/OrderDetails/OrderDetails';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerconstructor.module.css';
 import { BurgerContext, ModalContext } from '../../utils/appContext';
+import { createOrder } from '../../utils/api';
 
 function BurgerConstructor() {
 
   const { state, setState } = useContext(BurgerContext);
-  const { setModal } = useContext(ModalContext);
-
-  const createOrder = async (ingredients) => {
-    const res = await fetch(`${API_URL}orders`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(
-        { ingredients }
-      ),
-    });
-    if (res.ok) {
-      return res.json();
-    }
-    return await Promise.reject(res.status);
-  }  
+  const { setModal } = useContext(ModalContext); 
 
   const priceTotal = () => {
     const bunIngredientsPrice = 2 * 2215;
@@ -43,12 +28,15 @@ function BurgerConstructor() {
 	const handleOpenModal = () => {
     createOrder(state.burgerIngredients.map(el => el._id))
       .then((data) => {
+        console.log(data);
         setModal({
           visible: true,
           content: <OrderDetails orderNumber={data.order.number}/>
         })
       })
-
+			.catch((err) => {
+				(console.log(err))
+			})
 	}  
 
   return (
