@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import styles from './main.module.css';
 import Modal from '../../components/Modal/Modal';
 import BurgerIngredients from '../../components/BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstructor';
-import dataPropTypes from '../../utils/types';
+import { ModalContext } from '../../utils/appContext';
 
-function Main({ data }) {
+function Main() {
 
   const [modal, setModal] = React.useState({
 		visible: false,
@@ -18,15 +17,13 @@ function Main({ data }) {
 
   return (
     <main className={clsx('pl-10 pr-10', styles.main)}>
-      <BurgerIngredients data={data} setModal={setModal} />
-      <BurgerConstructor data={data} setModal={setModal} />
-      {visible && <Modal setModal={setModal}>{content}</Modal>}
+      <ModalContext.Provider value={{ modal, setModal }}>
+        <BurgerIngredients />
+        <BurgerConstructor />
+        {visible && <Modal>{content}</Modal>}
+      </ModalContext.Provider>
     </main>
   );
-}
-
-Main.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes).isRequired
 }
 
 export default Main;

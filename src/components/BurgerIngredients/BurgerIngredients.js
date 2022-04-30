@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgeringredients.module.css';
 import BurgerIngredientsSecton from '../../components/BurgerIngredientsSecton/BurgerIngredientsSection';
 import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
-import dataPropTypes from '../../utils/types';
+import { ModalContext } from '../../utils/appContext';
 
-function BurgerIngredients({ data, setModal }) {
+function BurgerIngredients() {
+
+  const { setModal } = useContext(ModalContext);
 
   const handleOpenModal = (element) => {
     setModal({
@@ -41,19 +42,16 @@ function BurgerIngredients({ data, setModal }) {
       </div>
       <section className={clsx(styles.content, 'mb-4')}>
         <BurgerIngredientsSecton 
-          data={data} 
           title="Булки" 
           type="bun"
           handleOpenModal={handleOpenModal}
         />
         <BurgerIngredientsSecton 
-          data={data} 
           title="Соусы" 
           type="sauce" 
           handleOpenModal={handleOpenModal}          
         />
         <BurgerIngredientsSecton 
-          data={data} 
           title="Начинки" 
           type="main" 
           handleOpenModal={handleOpenModal}          
@@ -61,11 +59,6 @@ function BurgerIngredients({ data, setModal }) {
       </section>              
     </section>
   )
-}
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes).isRequired,
-  setModal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;
