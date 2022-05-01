@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
-import styles from './modal.module.css'
+import styles from './modal.module.css';
+import { ModalContext } from '../../utils/appContext';
 
 const modalRoot = document.getElementById("react-modals");
 
-function Modal({ children, setModal }) {
+function Modal({ children }) {
+
+	const { setModal } = useContext(ModalContext);
 
 	const onCloseEsc = (e) => {
 		if (e.key === "Escape")
@@ -48,8 +51,7 @@ function Modal({ children, setModal }) {
 }
 
 Modal.propTypes = {
-	children: PropTypes.element,
-	setModal: PropTypes.func.isRequired
+	children: PropTypes.element
 }
 
 export default Modal;
