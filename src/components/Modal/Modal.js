@@ -5,13 +5,14 @@ import clsx from 'clsx';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import styles from './modal.module.css';
-import { ModalContext } from '../../utils/appContext';
+import { useDispatch } from 'react-redux';
+import { CLOSE_MODAL } from '../../services/actions/modal';
 
 const modalRoot = document.getElementById("react-modals");
 
 function Modal({ children }) {
 
-	const { setModal } = useContext(ModalContext);
+	const dispatch = useDispatch();
 
 	const onCloseEsc = (e) => {
 		if (e.key === "Escape")
@@ -19,9 +20,8 @@ function Modal({ children }) {
 	}
 
 	const onClose = () => {
-		setModal({
-			isVisible: false,
-			content: null,
+		dispatch({
+			type: CLOSE_MODAL
 		})
 	}
 
