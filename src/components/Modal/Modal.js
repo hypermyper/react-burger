@@ -5,24 +5,14 @@ import clsx from 'clsx';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import styles from './modal.module.css';
-import { useDispatch } from 'react-redux';
-import { CLOSE_MODAL } from '../../services/actions/modal';
 
 const modalRoot = document.getElementById("react-modals");
 
-function Modal({ children }) {
-
-	const dispatch = useDispatch();
+function Modal({ children, onClose }) {
 
 	const onCloseEsc = (e) => {
 		if (e.key === "Escape")
 			onClose();
-	}
-
-	const onClose = () => {
-		dispatch({
-			type: CLOSE_MODAL
-		})
 	}
 
 	useEffect(() => {
@@ -30,7 +20,7 @@ function Modal({ children }) {
 		return () => {
 			window.removeEventListener('keydown', onCloseEsc)
 		}
-	})
+	}, [onClose]);
 
 	return ReactDOM.createPortal((
 		<>
@@ -51,7 +41,8 @@ function Modal({ children }) {
 }
 
 Modal.propTypes = {
-	children: PropTypes.element
+	children: PropTypes.element,
+	onClose: PropTypes.func
 }
 
 export default Modal;

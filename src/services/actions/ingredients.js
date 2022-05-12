@@ -24,6 +24,14 @@ const filterArray = (arr) => {
 	}), {})
 }
 
+function getProductsFailed() {
+  return { type: GET_PRODUCTS_FAILED }
+}
+
+function createOrderFailed() {
+  return { type: CREATE_ORDER_FAILED }
+}
+
 export const getBurgerIngredients = () => {
 	return function (dispatch) {
 		dispatch({
@@ -38,15 +46,11 @@ export const getBurgerIngredients = () => {
 				});
 				console.log(ingredientsObj);
 			} else {
-				dispatch({
-					type: GET_PRODUCTS_FAILED
-				});
+				dispatch(getProductsFailed());
 			}
 		}).catch(err => {
 			console.log(err)
-			dispatch({
-				type: GET_PRODUCTS_FAILED
-			})
+			dispatch(getProductsFailed());
 		})
 	};
 }
@@ -64,15 +68,11 @@ export const createBurgerOrder = (ingredientsId) => {
 				});
 				console.log(res);
 			} else {
-				dispatch({
-					type: CREATE_ORDER_FAILED
-				});
+				dispatch(createOrderFailed());
 			}
 		}).catch(err => {
 			console.log(err)
-			dispatch({
-				type: CREATE_ORDER_FAILED
-			})
+			dispatch(createOrderFailed());
 		})
 	};
 }

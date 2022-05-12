@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -59,7 +60,7 @@ function DraggableElement({ item, index, handleDeleteIngredient, moveElement }) 
 	drag(drop(ref));
 
 	return (
-    <li className={clsx(styles.content_list)} key={index} ref={ref} style={{ opacity }}>
+    <li className={clsx(styles.content_list)} ref={ref} style={{ opacity }}>
     <DragIcon type="primary" />
     <ConstructorElement 
       text={item.name}

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import styles from './main.module.css';
-import Modal from '../Modal/Modal';
 import Loader from '../Loader/Loader.js';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
@@ -13,7 +12,6 @@ import { ADD_INGREDIENTS, INCREASE_INGREDIENT } from '../../services/actions/ing
 
 function Main() {
 
-  const { visible, content } = useSelector(store => store.modal);
   const { isLoading, hasError, loaded } = useSelector(store => store.ingredients);
 
   const dispatch = useDispatch();
@@ -44,7 +42,6 @@ function Main() {
         <BurgerConstructor onDropHandler={handleDrop} />
       </DndProvider>
       }
-        {visible && <Modal>{content}</Modal>}
     </main>
   );
 }

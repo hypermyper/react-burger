@@ -4,15 +4,18 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgeringredients.module.css';
 import BurgerIngredientsSecton from '../../components/BurgerIngredientsSecton/BurgerIngredientsSection';
 import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
+import Modal from '../../components/Modal/Modal';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { CURRENT_BURGER } from '../../services/actions/ingredients';
-import { OPEN_MODAL } from '../../services/actions/modal';
+import { OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/modal';
 
 function BurgerIngredients() {
 
   const dispatch = useDispatch();
   const { bun, sauce, main } = useSelector(store => store.ingredients.data);
+  const { currentBurger } = useSelector(store => store.ingredients);
+  const { content, visible } = useSelector(store => store.modal);
 
   const rootRef = useRef(null);
   const bunRef = useRef(null);
@@ -41,9 +44,23 @@ function BurgerIngredients() {
     })
   }  
 
-	useEffect(() => {
-	  document.querySelector(`#${current}`).scrollIntoView();
-	}, [current]);
+  const onClose = () => {
+		dispatch({
+			type: CLOSE_MODAL
+		})
+	}
+
+  const scrollIntoBun = () => {
+    bunRef.current.scrollIntoView({behavior: 'smooth'});
+  }
+
+  const scrollIntoSauce = () => {
+    sauceRef.current.scrollIntoView({behavior: 'smooth'});
+  }
+
+  const scrollIntoMain = () => {
+    mainRef.current.scrollIntoView({behavior: 'smooth'});
+  }
 
   return (
     <section className={clsx(styles.section, 'pt-10')}>
@@ -52,20 +69,21 @@ function BurgerIngredients() {
         <Tab 
           value="bunIngredients" 
           active={current === 'bunIngredients'} 
-          onClick={setCurrent}>
+          onClick={scrollIntoBun}
+          >
             Булки
         </Tab>
         <Tab 
           value="sauceIngredients" 
           active={current === 'sauceIngredients'} 
-          onClick={setCurrent}
+          onClick={scrollIntoSauce}
           >
             Соусы
         </Tab>
         <Tab 
           value="mainIngredients" 
           active={current === 'mainIngredients'} 
-          onClick={setCurrent}
+          onClick={scrollIntoMain}
           >
             Начинки
         </Tab>
@@ -95,7 +113,8 @@ function BurgerIngredients() {
           renderModal={renderModal}                 
           ref={mainRef}       
         />
-      </section>              
+      </section>   
+      {currentBurger && visible && <Modal onClose={onClose}>{content}</Modal>}           
     </section>
   )
 }

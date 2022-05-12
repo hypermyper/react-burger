@@ -6,7 +6,7 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
-function BurgerElement({ item, renderModal }) {
+function BurgerElement({ item, renderModal }) { 
 
 	const { counts, bun } = useSelector(store => store.ingredients.burgerIngredients);
 	const count = (item.type === 'bun') && bun && bun._id === item._id ? 2 : counts[item._id] && counts[item._id];  
@@ -22,6 +22,7 @@ function BurgerElement({ item, renderModal }) {
 	}  
 
  	const handleClick = () => {
+    console.log(elementCard);
     renderModal(elementCard);
 	}
 
@@ -46,7 +47,18 @@ function BurgerElement({ item, renderModal }) {
 }
 
 BurgerElement.propTypes = {
-
+	item: PropTypes.shape({
+		_id: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		type: PropTypes.string.isRequired,
+		proteins: PropTypes.number.isRequired,
+		fat: PropTypes.number.isRequired,
+		carbohydrates: PropTypes.number.isRequired,
+		calories: PropTypes.number.isRequired,
+		price: PropTypes.number.isRequired,
+		image: PropTypes.string.isRequired
+	}).isRequired,
+	renderModal: PropTypes.func.isRequired
 }
 
 export default BurgerElement;

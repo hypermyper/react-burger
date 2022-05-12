@@ -3,16 +3,19 @@ import clsx from 'clsx';
 import { API_URL } from '../../utils/constants';
 import { useSelector, useDispatch } from 'react-redux';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
+import Modal from '../Modal/Modal';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerconstructor.module.css';
 import { createBurgerOrder, UPDATE_CONSTRUCTOR, DELETE_INGREDIENT, DECREASE_INGREDIENT } from '../../services/actions/ingredients';
 import DraggableElement from '../DraggableElement/DraggableElement.js';
-import { OPEN_MODAL } from '../../services/actions/modal';
+import { OPEN_MODAL, CLOSE_MODAL} from '../../services/actions/modal';
 import { useDrop } from 'react-dnd';
 
 function BurgerConstructor({ onDropHandler }) {
 
 	const { bun, restBurgerIngredients } = useSelector(store => store.ingredients.burgerIngredients);
+  const { currentOrder } = useSelector(store => store.ingredients);	
+  const { content, visible } = useSelector(store => store.modal);
 
 	const dispatch = useDispatch();
 
@@ -51,11 +54,22 @@ function BurgerConstructor({ onDropHandler }) {
 
     dispatch(createBurgerOrder([bun._id, ...ingredientsId]));
 
+    console.log(ingredientsId, bun._id);
+
     dispatch({
       type: OPEN_MODAL,
       content: <OrderDetails />
     })
    
+	} 
+  
+  const onClose = () => {
+		dispatch({
+			type: CLOSE_MODAL
+		});
+
+    console.log(currentOrder);
+    console.log('закрыли окно');
 	}  
 
 	const moveElement = useCallback((dragIndex, hoverIndex) => {
@@ -94,7 +108,7 @@ function BurgerConstructor({ onDropHandler }) {
               <DraggableElement 
                 item={burger} 
                 index={i} 
-                key={i} 
+                key={burger.productId} 
                 handleDeleteIngredient={handleDeleteIngredient} 
                 moveElement={moveElement} 
               />
@@ -119,6 +133,7 @@ function BurgerConstructor({ onDropHandler }) {
             Оформить заказ
           </Button>
         </>}
+        {currentOrder && visible && <Modal onClose={onClose}>{content}</Modal>}
       </div>     
     </section>
   )
