@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { getIngredients, createOrder } from '../../utils/api';
 
 export const GET_PRODUCTS_REQUEST = 'GET_PRODUCTS_REQUEST';
@@ -17,6 +18,12 @@ export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
 
 export const TAB_SWITCH = 'TAB_SWITCH';
 
+export const addIngridients = (item) => ({
+  type: 'ADD_INGREDIENTS',
+	item,
+  payload: uuidv4()
+});
+
 const filterArray = (arr) => {
 	return arr.reduce((acc, curr) =>
 	({
@@ -31,6 +38,8 @@ function getProductsFailed() {
 function createOrderFailed() {
   return { type: CREATE_ORDER_FAILED }
 }
+
+
 
 export const getBurgerIngredients = () => {
 	return function (dispatch) {

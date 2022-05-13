@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+//import { v4 as uuidv4 } from 'uuid';
 import {
 	GET_PRODUCTS_REQUEST,
 	GET_PRODUCTS_SUCCESS,
@@ -85,7 +85,8 @@ export const ingredientsReducer = (state = initialState, action) => {
 			}
 			const newItem = { 
 				...action.item, 
-				productId:  uuidv4() 
+//				productId: uuidv4() 
+				productId: action.payload
 			}
 			return {
 				...state,
