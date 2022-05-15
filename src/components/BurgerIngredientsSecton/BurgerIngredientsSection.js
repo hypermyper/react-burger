@@ -1,35 +1,45 @@
-import React, { useContext } from 'react';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 import styles from './burgeringredientssection.module.css';
 import PropTypes from 'prop-types';
 import BurgerElement from '../../components/BurgerElement/BurgerElement';
-import { BurgerContext } from '../../utils/appContext';
 
-function BurgerIngredientsSecton(props) {
-
-  const { state } = useContext(BurgerContext);
+const BurgerIngredientsSecton = forwardRef(({ title, array, type, renderModal, id }, ref) => {
 
   return (
     <>
-      <h2 className={clsx('text', 'text_type_main-medium', 'mb-6')}>{props.title}</h2>
+      <h2 className={clsx('text', 'text_type_main-medium', 'mb-6')} ref={ref} id={id}>{title}</h2>
       <ul className={clsx(styles.elements, 'mb-10')}>
-        {state.data.map((burger, index) => (
-          (burger.type == props.type) && 
-          <BurgerElement 
-            key={index}
-            element={burger}
-            handleOpenModal={props.handleOpenModal}
-          />
-        ))}
+        {array.map((burger, index) => (
+          (burger.type == type) && 
+            <BurgerElement 
+              key={index}
+              item={burger}
+              renderModal={renderModal}
+            />
+          ))
+        }
       </ul> 
     </>
   )
-}
+});
 
 BurgerIngredientsSecton.propTypes = {
   title: PropTypes.string.isRequired,
+	array: PropTypes.arrayOf(PropTypes.shape({
+				_id: PropTypes.string.isRequired,
+				name: PropTypes.string.isRequired,
+				type: PropTypes.string.isRequired,
+				proteins: PropTypes.number.isRequired,
+				fat: PropTypes.number.isRequired,
+				carbohydrates: PropTypes.number.isRequired,
+				calories: PropTypes.number.isRequired,
+				price: PropTypes.number.isRequired,
+				image: PropTypes.string.isRequired
+			}).isRequired),  
   type: PropTypes.string.isRequired,
-  handleOpenModal: PropTypes.func.isRequired
+  renderModal: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 }
 
 export default BurgerIngredientsSecton;
