@@ -39,8 +39,6 @@ function createOrderFailed() {
   return { type: CREATE_ORDER_FAILED }
 }
 
-
-
 export const getBurgerIngredients = () => {
 	return function (dispatch) {
 		dispatch({

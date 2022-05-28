@@ -1,21 +1,26 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import clsx from 'clsx';
-import { API_URL } from '../../utils/constants';
 import { useSelector, useDispatch } from 'react-redux';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
-import Modal from '../Modal/Modal';
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+//import Modal from '../Modal/Modal';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerconstructor.module.css';
 import { createBurgerOrder, UPDATE_CONSTRUCTOR, DELETE_INGREDIENT, DECREASE_INGREDIENT } from '../../services/actions/ingredients';
 import DraggableElement from '../DraggableElement/DraggableElement.js';
-import { OPEN_MODAL, CLOSE_MODAL} from '../../services/actions/modal';
+//import { OPEN_MODAL, CLOSE_MODAL} from '../../services/actions/modal';
 import { useDrop } from 'react-dnd';
+import { push } from 'connected-react-router';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 
 function BurgerConstructor({ onDropHandler }) {
 
 	const { bun, restBurgerIngredients } = useSelector(store => store.ingredients.burgerIngredients);
   const { currentOrder } = useSelector(store => store.ingredients);	
-  const { content, visible } = useSelector(store => store.modal);
+//  const { content, visible } = useSelector(store => store.modal);
+
+  const location = useLocation();
+  const history = useHistory();
+  const hasToken = localStorage.getItem('refreshToken');
 
 	const dispatch = useDispatch();
 
@@ -50,27 +55,41 @@ function BurgerConstructor({ onDropHandler }) {
   }
 
 	const handleOpenModal = () => {
-    const ingredientsId = restBurgerIngredients.map(el => el._id);
+    if (hasToken) {
+      const ingredientsId = restBurgerIngredients.map(el => el._id);
 
-    dispatch(createBurgerOrder([bun._id, ...ingredientsId]));
+      dispatch(createBurgerOrder([bun._id, ...ingredientsId]));
 
-    console.log(ingredientsId, bun._id);
+      console.log(ingredientsId, bun._id);
 
-    dispatch({
-      type: OPEN_MODAL,
-      content: <OrderDetails />
-    })
-   
+/*       dispatch({
+        type: OPEN_MODAL,
+        content: <OrderDetails />
+      }) */
+
+      history.push({
+        pathname: '/',
+        state: {
+          background: location
+        }
+      });
+
+    } else {
+      console.log('Не авторизован');
+      console.log(push);
+      history.push('/login');
+      //dispatch(push('/login'));
+    } 
 	} 
   
-  const onClose = () => {
+/*   const onClose = () => {
 		dispatch({
 			type: CLOSE_MODAL
 		});
 
     console.log(currentOrder);
     console.log('закрыли окно');
-	}  
+	}   */
 
 	const moveElement = useCallback((dragIndex, hoverIndex) => {
 		dispatch({
@@ -89,7 +108,7 @@ function BurgerConstructor({ onDropHandler }) {
   }
 
   return (
-    <section className={clsx(styles.section, 'pt-25', 'pl-4', 'pb-4')} ref={dropTarget}>
+    <section className={clsx(styles.section, 'pt-25', 'pl-4', 'pb-4', 'text', 'text_type_main-default')} ref={dropTarget}>
       <div className={clsx(styles.burger_section)}>
         {bun && <div className={clsx('pl-8', styles.bun_section)}>
           <ConstructorElement 
@@ -133,7 +152,7 @@ function BurgerConstructor({ onDropHandler }) {
             Оформить заказ
           </Button>
         </>}
-        {currentOrder && visible && <Modal onClose={onClose}>{content}</Modal>}
+        {/* {currentOrder && visible && <Modal onClose={onClose}>{content}</Modal>} */}
       </div>     
     </section>
   )

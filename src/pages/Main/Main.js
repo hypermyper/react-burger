@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import clsx from 'clsx';
 import styles from './main.module.css';
-import Loader from '../Loader/Loader.js';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import Loader from '../../components/Loader/Loader.js';
+import BurgerIngredients from '../../components/BurgerIngredients/BurgerIngredients';
+import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstructor';
 import { getBurgerIngredients, addIngridients } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { ADD_INGREDIENTS, INCREASE_INGREDIENT } from '../../services/actions/ingredients';
+import { INCREASE_INGREDIENT } from '../../services/actions/ingredients';
 
 function Main() {
 

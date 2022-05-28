@@ -1,0 +1,4 @@
+.content {
+  composes: content from '../../components/IngredientDetails/ingredientdetails.module.css';
+  text-align: center;  
+}

@@ -23,7 +23,7 @@ function BurgerElement({ item, renderModal }) {
 
  	const handleClick = () => {
     console.log(elementCard);
-    renderModal(elementCard);
+    //renderModal(elementCard);
 	}
 
 	const [{ isDrag }, dragRef] = useDrag({

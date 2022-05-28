@@ -1,0 +1,19 @@
+.link {
+  text-decoration: none;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.link_active {
+  color: #f2f2f3;
+}
+
+.list_nav {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.nav {
+  max-width: 320px;
+}

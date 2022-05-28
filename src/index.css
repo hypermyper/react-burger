@@ -4,3 +4,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+#root {
+  height: 100vh;  
+  display: flex;
+  flex-direction: column;
+}
+
+.input__container .input_size_default {
+  width: 480px;
+}
