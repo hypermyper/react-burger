@@ -64,17 +64,22 @@ export const signUpRequest = ({ email, password, name }) => {
 export const forgotPassword = ({ email }) => {
   return fetch(`${API_URL}password-reset`, {
 		method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',    
     headers: {
       'Content-Type': 'application/json'
     },
 		body: JSON.stringify(
 			{ email }
 		),
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',    
 	})
   .then((res) => checkResponse(res));
 }
 
-export const resetPassword = ({ password, token }) => {
+/* export const resetPassword = ({ password, token }) => {
   return fetch(`${API_URL}password-reset/reset`, {
 		method: 'POST',
     headers: {
@@ -85,7 +90,7 @@ export const resetPassword = ({ password, token }) => {
 		),
 	})
   .then((res) => checkResponse(res));
-}
+} */
 
 export const getUserRequest = () => {
   return fetchWithRefreshToken(`${API_URL}auth/user`, {

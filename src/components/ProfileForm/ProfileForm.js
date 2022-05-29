@@ -73,15 +73,12 @@ function ProfileForm() {
   const emailNameInput = state.emailDisabled ? 'EditIcon' : 'CloseIcon';
   const passwordNameInput = state.passwordDisabled ? 'EditIcon' : 'CloseIcon';
 
-  const submit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     let data = {};
     data = state.name !== currentUserName ? { ...data, name: state.name } : data;
     data = state.email !== currentUserEmail ? { ...data, email: state.email } : data;
-    data =
-      state.password.length !== 0
-        ? { ...data, password: state.password }
-        : data;
+    data = state.password.length !== 0 ? { ...data, password: state.password } : data;
 
     dispatch(updateUser({ ...data }));
     
@@ -112,7 +109,7 @@ function ProfileForm() {
   }
 
   return (
-    <form onSubmit={submit} className={clsx(styles.form)}>
+    <form onSubmit={onSubmit} className={clsx(styles.form)}>
       <Input
         type={'text'}
         placeholder={'Имя'}

@@ -24,12 +24,12 @@ export const addIngridients = (item) => ({
   payload: uuidv4()
 });
 
-const filterArray = (arr) => {
-	return arr.reduce((acc, curr) =>
-	({
-		...acc, [curr.type]: [...acc[curr.type] || [], curr]
-	}), {})
-}
+// const filterArray = (arr) => {
+// 	return arr.reduce((acc, curr) =>
+// 	({
+// 		...acc, [curr.type]: [...acc[curr.type] || [], curr]
+// 	}), {})
+// }
 
 function getProductsFailed() {
   return { type: GET_PRODUCTS_FAILED }
@@ -45,13 +45,13 @@ export const getBurgerIngredients = () => {
 			type: GET_PRODUCTS_REQUEST
 		});
 		getIngredients().then((res) => {
-			const ingredientsObj = filterArray(res.data);
+//			const ingredientsObj = filterArray(res.data);
 			if (res && res.success) {
 				dispatch({
 					type: GET_PRODUCTS_SUCCESS,
-					items: ingredientsObj
+					items: res.data
 				});
-				console.log(ingredientsObj);
+				console.log(res.data);
 			} else {
 				dispatch(getProductsFailed());
 			}

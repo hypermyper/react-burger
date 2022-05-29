@@ -1,62 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import styles from './ingredientdetails.module.css';
-import { getIngredients } from '../../utils/api';
+//import { getIngredients } from '../../utils/api';
 import { useParams } from "react-router-dom";
 import Loader from '../Loader/Loader';
-//import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function IngredientDetails() {
-//	const { currentBurger } = useSelector(store => store.ingredients);
+	const { data } = useSelector(store => store.ingredients);
+	let { id } = useParams();
 
-const [state, setState] = useState({
-	image: '',
-	name: '',
-	calories: '',
-	proteins: '',
-	fat: '',
-	carbohydrates: '',
-	isLoading: false
-});
+	const currentBurger = data.find((el) => el._id === id);	
 
-let { id } = useParams();
+  if (!currentBurger) {
+    return (<Loader />)
+  }	
 
-useEffect(() => {
-	setState((state) => {
-		return {
-			...state,
-			isLoading: true,
-		};
-	});
-
-	getIngredients().then((res) => {
-		const currentBurger = res.data.find((el) => el._id === id)
-		setState({
-			image: currentBurger.image,
-			name: currentBurger.name,
-			calories: currentBurger.calories,
-			proteins: currentBurger.proteins,
-			fat: currentBurger.fat,
-			carbohydrates: currentBurger.carbohydrates,
-			isLoading: false,
-		})
-	}).catch((err) => {
-		console.log(err)
-		setState((state) => {
-			return {
-				...state,
-				isLoading: false,
-			}
-		})
-	})
-
-}, [id]);
-
-const { image, name, calories, proteins, fat, carbohydrates } = state;
-
-if (state.isLoading) {
-	return (<Loader />)
-}
+	const { image, name, calories, proteins, fat, carbohydrates } = currentBurger;
 
 	return (
 		<div className={clsx(styles.content, styles.text)}>

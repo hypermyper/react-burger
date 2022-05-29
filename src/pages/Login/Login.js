@@ -37,7 +37,7 @@ function Login() {
 
   if (userName || localStorage.getItem('refreshToken')) {
     return (
-      <Redirect to={{ pathname: '/' }} />
+      <Redirect to={ state?.from || '/' } />
     );
   }
 

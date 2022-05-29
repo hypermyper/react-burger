@@ -2,7 +2,9 @@ import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { resetPassword } from '../../utils/api';
+import { resetPasswordRequest } from '../../utils/api';
+import { resetPassword } from '../../services/actions/auth';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import styles from './resetpassword.module.css';
 
@@ -19,26 +21,38 @@ function ResetPassword() {
 			[e.target.name]: e.target.value
 		});
 	}
+
+  const dispatch = useDispatch();
+	
 	const inputRef = React.useRef(null)
 	const onIconClick = useCallback(() => {
 		setTimeout(() => inputRef.current.focus(), 0)
 		alert('Icon Click Callback')
 	}, [])
 
-	const submit = e => {
-		e.preventDefault();
-		console.log(state);
+  const submit = (e) => {
+    e.preventDefault();
+    dispatch(resetPassword(state));
+    resetPasswordRequest(state)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-		resetPassword(state).then((res) => {
-			console.log(res)
-		}).catch(err => {
-			console.log(err)
-		})
-	};
+  const isforgotPasswordSuccess = useSelector(store => store.auth.isforgotPasswordSuccess);
 
   if (localStorage.getItem('refreshToken')) {
     return (
       <Redirect to={{ pathname: '/' }} />
+    );
+  }	
+
+  if (!localStorage.getItem('refreshToken') && !isforgotPasswordSuccess) {
+    return (
+      <Redirect to={{ pathname: '/forgot-password' }} />
     );
   }	
 

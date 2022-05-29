@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import { Link, Redirect } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { forgotPassword } from '../../utils/api';
+import { forgotPassword } from '../../services/actions/auth';
+import { useDispatch } from 'react-redux';
 import styles from './forgotpassword.module.css';
 
 function ForgotPassword() {
@@ -11,6 +12,8 @@ function ForgotPassword() {
 	
 	const [errorEmail, setErrorEmail] = useState(false);
 	const [errorEmailText, setErrorEmailText] = useState('');
+
+  const dispatch = useDispatch();	
 
 	const onChangeEmail = e => {
 		setValue(e.target.value);
@@ -21,11 +24,7 @@ function ForgotPassword() {
 	const submit = e => {
 		e.preventDefault();
     if (value != '') {
-		  forgotPassword(value).then((res) => {
-			  console.log(res);
-		  }).catch(err => {
-			  console.log(err);
-		  })
+			dispatch(forgotPassword(value));
     } else {
       console.log('Пустой email');
 			setErrorEmail(true);

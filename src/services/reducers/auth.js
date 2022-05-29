@@ -14,6 +14,8 @@ import {
   FORGOT_PASSWORD_REQUEST, 
   FORGOT_PASSWORD_SUCCESS, 
   FORGOT_PASSWORD_FAILED,
+  SET_RESET_PASSWORD_STATE,
+  CLEAR_RESET_PASSWORD_STATE,
   RESET_PASSWORD_REQUEST, 
   RESET_PASSWORD_SUCCESS, 
   RESET_PASSWORD_FAILED,
@@ -49,7 +51,7 @@ const initialState = {
   forgotPasswordFailed: false,
 
   isforgotPasswordRequest: false,
-  isforgotPasswordSaccess: false,
+  isforgotPasswordSuccess: false,
 
   resetPasswordRequest: false,
   resetPasswordFailed: false,
@@ -157,7 +159,7 @@ export const authReducer = (state = initialState, action) => {
         forgotPasswordRequest: true,
         forgotPasswordFailed: false,
         isforgotPasswordRequest: false,
-        isforgotPasswordSaccess: false,
+        isforgotPasswordSuccess: false,
       };
     }
     case FORGOT_PASSWORD_SUCCESS: {
@@ -165,7 +167,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         forgotPasswordRequest: false,
         isforgotPasswordRequest: true,
-        isforgotPasswordSaccess: true
+        isforgotPasswordSuccess: true
       };
     }
     case FORGOT_PASSWORD_FAILED: {
@@ -173,7 +175,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         forgotPasswordFailed: true,
         forgotPasswordRequest: false,
-        isforgotPasswordSaccess: false,
+        isforgotPasswordSuccess: false,
         isforgotPasswordRequest: true
       };
     }
@@ -192,6 +194,19 @@ export const authReducer = (state = initialState, action) => {
         ...state,
       };
     }
+    case SET_RESET_PASSWORD_STATE: {
+      return {
+        ...state,
+        resetPasswordSuccess: action.resetPasswordSuccess,
+      }
+    }
+    case CLEAR_RESET_PASSWORD_STATE: {
+      return {
+        ...state,
+        resetPasswordSuccess: false,
+        resetPasswordError: ""
+      }
+    }  
     case LOGOUT_REQUEST: {
       return {
         ...state,

@@ -11,7 +11,7 @@ import Loader from '../../components/Loader/Loader';
 
 function Profile() {
   const dispatch = useDispatch();
-  const { getUserRequest } = useSelector(store => store.auth);
+  const { getUserRequest, getUserFailed } = useSelector(store => store.auth);
 
   useEffect(() => {
     dispatch(getUser());
@@ -20,6 +20,10 @@ function Profile() {
   if (getUserRequest) {
     //console.log(getUserRequest);
     return (<Loader />)
+  }
+
+  if(getUserFailed) {
+    console.log('getuser' . getUserFailed);
   }
 
   return (
