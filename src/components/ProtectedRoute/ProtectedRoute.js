@@ -1,31 +1,32 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { refreshToken } from '../../services/actions/auth'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export function ProtectedRoute({ children, ...rest }) {
-  const dispatch = useDispatch();
 
-  const isTokenUpdated = useSelector(store => store.auth.isTokenUpdated);
-  const tokenUpdateDate = useSelector(store => store.auth.tokenUpdateDate);
-  const hasToken = !!localStorage.getItem('refreshToken');
+  const { name } = useSelector(store => store.auth);
+  const hasToken = localStorage.getItem('token');
 
-  useEffect(() => {
-    if (!isTokenUpdated && hasToken) {
-      dispatch(refreshToken());
-    }
-  }, [dispatch, hasToken, isTokenUpdated]);
+  if (!hasToken && !name) {
+    return (
+      <Route
+        {...rest}
+        render={({ location }) => (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location },
+            }}
+          />
+        )}
+      />
+    );
+  }
 
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        (hasToken && tokenUpdateDate) ? (
-          children
-        ) : (
-          <Redirect to={{ pathname: '/login', state: { from: location } }} />
-        )
-      }
+      render={({ location }) => children}
     />
   );
 }

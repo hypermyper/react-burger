@@ -187,7 +187,9 @@ export const refreshTokenRequest = () => {
 
 const fetchWithRefreshToken = (url, options) => {
   return fetch(url, options)
-  .then((res) => checkResponse(res))
+  .then((res) => {
+      return res.ok ? res : Promise.reject(res)
+    })
     .catch((res) => {
       return res.json()
         .then(err => {

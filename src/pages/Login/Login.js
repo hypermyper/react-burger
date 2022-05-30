@@ -1,6 +1,6 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import clsx from 'clsx';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useLocation } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { login } from '../../services/actions/auth';
@@ -15,8 +15,9 @@ function Login() {
 	const userName = useSelector(store => store.auth.name);
 
   const dispatch = useDispatch();
+	const location = useLocation();
 
-	const inputRef = useRef(null)
+	const inputRef = useRef(null);
 
 	const handleInputChange = (e) => {
 		setState({
@@ -35,11 +36,14 @@ function Login() {
     dispatch(login(state));
   };
 
-  if (userName || localStorage.getItem('refreshToken')) {
+  if (userName) {
+    const { from } = location.state || { from: { pathname: '/' } };
     return (
-      <Redirect to={ state?.from || '/' } />
+      <Redirect
+        to={from}
+      />
     );
-  }
+  }	
 
 	return (
 		<div className={styles.container}>
