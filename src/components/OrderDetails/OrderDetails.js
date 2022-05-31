@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import styles from './orderdetails.module.css';
 import orderDetailsIcon from '../../images/orderDetailsIcon.svg';
 import { useSelector } from 'react-redux';
+import Loader from '../Loader/Loader';
 
 const OrderDetails = () => {
 
@@ -11,7 +11,7 @@ const OrderDetails = () => {
 
 	return (
 		<div className={clsx(styles.order, 'p-15')}>
-			{orderRequest && 'Загрузка…'}
+			{orderRequest && <Loader />}
 			{!orderRequest &&
 				<>
 					<h3 className={clsx(styles.order_number, 'text', 'text_type_digits-large', 'mb-8')}>{currentOrder.order.number}</h3>

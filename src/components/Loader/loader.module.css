@@ -4,5 +4,32 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 88px);
+/*  height: calc(100vh - 88px); */
+  height: 533px;
+  width: 700px;
+}
+
+.lds_dual_ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds_dual_ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid rgba(51, 51, 255, 0.4);
+  border-color: rgba(51, 51, 255, 0.4) transparent rgba(51, 51, 255, 0.4) transparent;
+  animation: lds_dual_ring 1.2s linear infinite;
+}
+@keyframes lds_dual_ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -39,3 +39,20 @@ header {
   composes: nav__item;  
   justify-content: center;  
 }
+
+.link {
+  text-decoration: none;
+  color: #8585ad;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.link:last-child {
+  justify-self: flex-end;
+  margin-right: 0;
+}
+
+.link_active {
+  color: #f2f2f3;
+}

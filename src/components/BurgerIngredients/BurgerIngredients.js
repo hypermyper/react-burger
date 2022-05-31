@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import clsx from 'clsx';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgeringredients.module.css';
@@ -12,9 +12,19 @@ import { OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/modal';
 
 function BurgerIngredients() {
 
+const filterArray = (arr) => {
+	return arr.reduce((acc, curr) =>
+	({
+		...acc, [curr.type]: [...acc[curr.type] || [], curr]
+	}), {})
+}  
+
   const dispatch = useDispatch();
-  const { bun, sauce, main } = useSelector(store => store.ingredients.data);
+
+  const { data } = useSelector(store => store.ingredients);
   const { currentBurger } = useSelector(store => store.ingredients);
+  //  const { bun, sauce, main } = useSelector(store => store.ingredients.data);
+  const { bun, sauce, main } = filterArray(data);
   const { content, visible } = useSelector(store => store.modal);
 
   const rootRef = useRef(null);

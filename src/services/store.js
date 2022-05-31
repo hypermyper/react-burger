@@ -1,5 +1,6 @@
 import { compose, createStore, applyMiddleware } from 'redux';
-import { rootReducer } from './reducers';
+import { rootReducer, history } from './reducers';
+import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 
 const composeEnhancers =
@@ -7,6 +8,8 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk)); 
+  const enhancer = composeEnhancers(
+    applyMiddleware(thunk, routerMiddleware(history))
+  );
 
 export const store = createStore(rootReducer, enhancer);

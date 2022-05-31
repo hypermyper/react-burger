@@ -3,6 +3,10 @@
 	flex-direction: column;
 	box-sizing: border-box;
 	width: 640px;
+	align-self: center;
+	justify-content: center;
+	flex-grow: 1;
+	width: 640px;	
 }
 
 .list {
@@ -26,7 +30,6 @@
 	list-style-type: none;
 	display: flex;
 	flex-direction: column;
-	text-align: center;
 }
 
 .list__item_text {
