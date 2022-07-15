@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, useHistory, useLocation, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
@@ -8,15 +8,16 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBurgerIngredients } from '../../services/actions/ingredients';
+import { TLocationTemplate } from '../../types';
 
 function App() {
-  const hasToken = localStorage.getItem('refreshToken');
-	const location = useLocation();
+//  const hasToken = localStorage.getItem('refreshToken');
+	const location = useLocation<TLocationTemplate>();
 	const history = useHistory();
 	const background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background; 
 
 	const dispatch = useDispatch();
-	const { loaded } = useSelector(store => store.ingredients);
+	const { loaded } = useSelector((store: any) => store.ingredients);
 
 	useEffect(() => {
 		if (!loaded) {

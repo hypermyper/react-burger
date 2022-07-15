@@ -9,14 +9,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { INCREASE_INGREDIENT } from '../../services/actions/ingredients';
+import { TIngredient } from "../../types";
 
 function Main() {
 
-  const { isLoading, hasError, loaded } = useSelector(store => store.ingredients);
+  const { isLoading, hasError, loaded } = useSelector( (store: any) => store.ingredients);
 
   const dispatch = useDispatch();
 
-  const handleDrop = (item) => {
+  const handleDrop = (item: TIngredient) => {
     dispatch(addIngridients(item));
     dispatch({
       type: INCREASE_INGREDIENT,

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, SyntheticEvent } from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -14,23 +14,20 @@ function ResetPassword() {
 		token: '',
 	})
 
-	const handleInputChange = (e) => {
+	const handleInputChange = (e: SyntheticEvent) => {
 		console.log(state);
+		const target = e.target as HTMLInputElement;
+    const value = target.value;
+    const name = target.name;
 		setState({
 			...state,
-			[e.target.name]: e.target.value
+			[name]: value
 		});
 	}
 
   const dispatch = useDispatch();
-	
-	const inputRef = React.useRef(null)
-	const onIconClick = useCallback(() => {
-		setTimeout(() => inputRef.current.focus(), 0)
-		alert('Icon Click Callback')
-	}, [])
 
-  const submit = (e) => {
+  const submit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(resetPassword(state));
     resetPasswordRequest(state)
@@ -42,7 +39,7 @@ function ResetPassword() {
       });
   };
 
-  const isforgotPasswordSuccess = useSelector(store => store.auth.isforgotPasswordSuccess);
+  const isforgotPasswordSuccess = useSelector((store: any) => store.auth.isforgotPasswordSuccess);
 
   if (localStorage.getItem('refreshToken')) {
     return (
@@ -72,8 +69,6 @@ function ResetPassword() {
 					value={state.token}
 					name={'token'}
 					error={false}
-					ref={inputRef}
-					onIconClick={onIconClick}
 					errorText={'Ошибка'}
 					size={'default'}
 				/>

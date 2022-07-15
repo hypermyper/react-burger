@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, SyntheticEvent } from 'react';
 import clsx from 'clsx';
 import { Link, Redirect } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -15,13 +15,15 @@ function ForgotPassword() {
 
   const dispatch = useDispatch();	
 
-	const onChangeEmail = e => {
-		setValue(e.target.value);
+	const onChangeEmail = (e: SyntheticEvent<HTMLInputElement>): void => {
+		const target = e.target as HTMLInputElement;
+		const value = target.value; 
+		setValue(value);
 		setErrorEmail(false);
 		setErrorEmailText('');
 	}
 
-	const submit = e => {
+	const submit = (e: SyntheticEvent) => {
 		e.preventDefault();
     if (value != '') {
 			dispatch(forgotPassword(value));
