@@ -1,4 +1,6 @@
-export const getCookie = (name) => {
+import { TIngredient, TIngredientWithProductId, TOrder } from '../types';
+
+export const getCookie = (name: string) => {
   const matches = document.cookie.match(
     new RegExp(
       '(?:^|; )' +
@@ -9,7 +11,7 @@ export const getCookie = (name) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export const setCookie = (name, value, props) => {
+export const setCookie = (name: string, value: string | number | boolean, props: any = {}) => {
   props = {
     path: '/',
     ...props,
@@ -35,6 +37,6 @@ export const setCookie = (name, value, props) => {
   document.cookie = updatedCookie;
 };
 
-export const deleteCookie = (name) => {
-  setCookie(name, null, { expires: -1 });
+export const deleteCookie = (name: string) => {
+  setCookie(name, false, { expires: -1 });
 };

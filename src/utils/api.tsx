@@ -1,5 +1,6 @@
 import { API_URL } from './constants';
 import { getCookie, setCookie, deleteCookie } from './functions';
+import { TUserData, TResetPassword, TUpdateUserData, TError } from '../types';
 
 export const getIngredients = () => {
 	return fetch(`${API_URL}ingredients`, {
@@ -16,7 +17,7 @@ export const getIngredients = () => {
   .then((res) => checkResponse(res));
 }
 
-export const createOrder = (ingredients) => {
+export const createOrder = (ingredients: Array<string>) => {
   return fetch(`${API_URL}orders`, {
     method: 'POST',
     headers: {
@@ -29,7 +30,7 @@ export const createOrder = (ingredients) => {
   .then((res) => checkResponse(res));
 } 
 
-export const signInRequest = ({ login, password }) => {
+export const signInRequest = ({ login, password }: TUserData) => {
   return fetch(`${API_URL}auth/login`, {
     method: 'POST',
     mode: 'cors',
@@ -43,7 +44,7 @@ export const signInRequest = ({ login, password }) => {
   .then((res) => checkResponse(res));
 };
 
-export const signUpRequest = ({ email, password, name }) => {
+export const signUpRequest = ({ email, password, name }: TUserData) => {
   return fetch(`${API_URL}auth/register`, {
 		method: 'POST',
     mode: 'cors',
@@ -61,7 +62,7 @@ export const signUpRequest = ({ email, password, name }) => {
   .then((res) => checkResponse(res));
 }
 
-export const forgotPassword = ({ email }) => {
+export const forgotPassword = ({ email }: TUserData) => {
   return fetch(`${API_URL}password-reset`, {
 		method: 'POST',
     mode: 'cors',
@@ -107,7 +108,7 @@ export const getUserRequest = () => {
   })
 };
 
-export const forgotPasswordRequest = email => {
+export const forgotPasswordRequest = (email: string) => {
   return fetch(`${API_URL}password-reset`, {
     method: 'POST',
     mode: 'cors',
@@ -123,7 +124,7 @@ export const forgotPasswordRequest = email => {
   .then((res) => checkResponse(res));
 };
 
-export const resetPasswordRequest = ({ password, token }) => {
+export const resetPasswordRequest = ({ password, token }: TResetPassword) => {
   return fetch(`${API_URL}password-reset/reset`, {
     method: 'POST',
     mode: 'cors',
@@ -155,7 +156,7 @@ export const signOutRequest = () => {
   .then((res) => checkResponse(res));
 };
 
-export const updateUserRequest = data => {
+export const updateUserRequest = (data: TUpdateUserData) => {
   return fetchWithRefreshToken(`${API_URL}auth/user`, {
     method: 'PATCH',
     mode: 'cors',
@@ -185,21 +186,21 @@ export const refreshTokenRequest = () => {
   .then((res) => checkResponse(res));
 };
 
-const fetchWithRefreshToken = (url, options) => {
+const fetchWithRefreshToken = (url: string, options: RequestInit) => {
   return fetch(url, options)
   .then((res) => {
       return res.ok ? res : Promise.reject(res)
     })
-    .catch((res) => {
+    .catch((res: Response) => {
       return res.json()
-        .then(err => {
+        .then((err: TError) => {
           if (err.message === 'jwt expired') {
             return refreshTokenRequest()
               .then(res => {
                 localStorage.setItem('refreshToken', res.refreshToken)
                 const authToken = res.accessToken.split('Bearer ')[1];
                 setCookie('token', authToken);
-                options.headers.Authorization = res.accessToken
+                (options.headers as { [key: string]: string}).Authorization = res.accessToken
                 return fetch(url, options)
                   .then((res) => checkResponse(res));
               })
@@ -214,7 +215,7 @@ const fetchWithRefreshToken = (url, options) => {
     })
 }
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
 	if (res.ok) {
 		return res.json();
 	}
