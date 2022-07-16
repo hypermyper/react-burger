@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import styles from './ingredientdetails.module.css';
 //import { getIngredients } from '../../utils/api';

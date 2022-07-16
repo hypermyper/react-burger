@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './main.module.css';
-import Loader from '../../components/Loader/Loader.js';
+import Loader from '../../components/Loader/Loader';
 import BurgerIngredients from '../../components/BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstructor';
 import { addIngridients } from '../../services/actions/ingredients';

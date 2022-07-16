@@ -1,9 +1,8 @@
-import { TIngredient, TIngredientWithProductId, TOrder } from '../types';
-
 export const getCookie = (name: string) => {
   const matches = document.cookie.match(
     new RegExp(
       '(?:^|; )' +
+      // eslint-disable-next-line
       name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
       '=([^;]*)'
     )
