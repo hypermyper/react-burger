@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import clsx from 'clsx';
 import styles from './profile.module.css';
-import { Switch, Route, Link, useLocation } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import ProfileNav from '../../components/ProfileNav/ProfileNav';
 import ProfileForm from '../../components/ProfileForm/ProfileForm';
 
@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../services/actions/auth';
 import Loader from '../../components/Loader/Loader';
 
-function Profile() {
+const Profile: FC = () => {
   const dispatch = useDispatch();
-  const { getUserRequest, getUserFailed } = useSelector(store => store.auth);
+  const { getUserRequest, getUserFailed } = useSelector((store: any) => store.auth);
 
   useEffect(() => {
     dispatch(getUser());
@@ -23,7 +23,7 @@ function Profile() {
   }
 
   if(getUserFailed) {
-    console.log('getuser' . getUserFailed);
+    console.log(getUserFailed);
   }
 
   return (

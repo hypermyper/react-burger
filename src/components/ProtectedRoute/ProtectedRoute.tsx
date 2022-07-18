@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-export function ProtectedRoute({ children, ...rest }) {
+export const ProtectedRoute: FC<{
+    path: string;
+    exact?: boolean;
+  }> = ({ children, ...rest }) => {
 
-  const { name } = useSelector(store => store.auth);
+  const { name } = useSelector( (store: any) => store.auth);
   const hasToken = localStorage.getItem('token');
 
   if (!hasToken && !name) {

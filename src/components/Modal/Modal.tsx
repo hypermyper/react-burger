@@ -1,24 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { useHistory } from "react-router-dom";
 import styles from './modal.module.css';
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot: Element | null = document.getElementById("react-modals");
 
-function Modal({ children }) {
+const Modal: FC = ({ children }) => {
 
 	const history = useHistory();
 
-	const onCloseEsc = (e) => {
+	const onCloseEsc = (e: KeyboardEvent) => {
 		if (e.key === "Escape")
 			onClose();
 	};
 
-  const onClose = (e) => {
+  const onClose = () => {
     history.goBack();
   };	
 
@@ -27,9 +26,9 @@ function Modal({ children }) {
 		return () => {
 			window.removeEventListener('keydown', onCloseEsc)
 		}
-	}, [onClose]);
+	});
 
-	return ReactDOM.createPortal((
+	return modalRoot && ReactDOM.createPortal((
 		<>
 			<div className={clsx(styles.modal, 'pr-10', 'pl-10', 'pt-10', 'pb-15')}>
 				<span className={clsx(styles.button_close)} onClick={onClose}>
@@ -45,10 +44,6 @@ function Modal({ children }) {
 	),
   modalRoot
 	);
-}
-
-Modal.propTypes = {
-	children: PropTypes.element
 }
 
 export default Modal;

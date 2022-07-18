@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import clsx from 'clsx';
 import styles from './profileform.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,9 +7,9 @@ import { updateUser } from '../../services/actions/auth';
 import Loader from '../Loader/Loader';
 
 function ProfileForm() {
-  const currentUserName = useSelector((store) => store.auth.name);
-  const currentUserEmail = useSelector((store) => store.auth.email);
-  const { updateUserRequest } = useSelector((store) => store.auth)
+  const currentUserName = useSelector((store: any) => store.auth.name);
+  const currentUserEmail = useSelector((store: any) => store.auth.email);
+  const { updateUserRequest } = useSelector((store: any) => store.auth)
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
@@ -31,24 +31,29 @@ function ProfileForm() {
     });
   }, [currentUserName, currentUserEmail]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: SyntheticEvent<HTMLInputElement>): void => {
+    const target = e.target as HTMLInputElement;
+    const value = target.value;
+    const name = target.name;    
     setState({
       ...state,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
-  const nameInputRef = React.useRef(null);
-  const emailInputRef = React.useRef(null);
-  const passwordInputRef = React.useRef(null);
+  const nameInputRef = React.useRef<HTMLInputElement>(null);
+  const emailInputRef = React.useRef<HTMLInputElement>(null);
+  const passwordInputRef = React.useRef<HTMLInputElement>(null);
 
   const activeNameInput = () => {
     setState({
       ...state,
       nameDisabled: state.nameDisabled ? false : true,
     });
-    nameInputRef.current.disabled = false;
-    setTimeout(() => nameInputRef.current.focus(), 0);
+    if (nameInputRef && nameInputRef.current) {
+      nameInputRef.current.disabled = false;
+    }
+    setTimeout(() => nameInputRef && nameInputRef.current && nameInputRef.current.focus(), 0);
   };
 
   const activeEmailInput = () => {
@@ -56,8 +61,10 @@ function ProfileForm() {
       ...state,
       emailDisabled: state.emailDisabled ? false : true,
     });
-    emailInputRef.current.disabled = false;
-    setTimeout(() => emailInputRef.current.focus(), 0);
+    if (emailInputRef && emailInputRef.current) {    
+      emailInputRef.current.disabled = false;
+    }
+    setTimeout(() => emailInputRef && emailInputRef.current && emailInputRef.current.focus(), 0);
   };
 
   const activePasswordInput = () => {
@@ -65,15 +72,17 @@ function ProfileForm() {
       ...state,
       passwordDisabled: state.passwordDisabled ? false : true,
     });
-    passwordInputRef.current.disabled = false;
-    setTimeout(() => passwordInputRef.current.focus(), 0);
+    if (passwordInputRef && passwordInputRef.current) {
+      passwordInputRef.current.disabled = false;
+    }
+    setTimeout(() => passwordInputRef && passwordInputRef.current && passwordInputRef.current.focus(), 0);
   };
 
   const iconNameInput = state.nameDisabled ? 'EditIcon' : 'CloseIcon';
   const emailNameInput = state.emailDisabled ? 'EditIcon' : 'CloseIcon';
   const passwordNameInput = state.passwordDisabled ? 'EditIcon' : 'CloseIcon';
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     let data = {};
     data = state.name !== currentUserName ? { ...data, name: state.name } : data;
@@ -91,7 +100,7 @@ function ProfileForm() {
     });
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
     setState({
       ...state,

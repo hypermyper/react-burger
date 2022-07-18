@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import styles from './ingredientdetails.module.css';
 //import { getIngredients } from '../../utils/api';
 import { useParams } from "react-router-dom";
 import Loader from '../Loader/Loader';
 import { useSelector } from 'react-redux';
+import { TIngredient } from '../../types';
 
-function IngredientDetails() {
-	const { data } = useSelector(store => store.ingredients);
-	let { id } = useParams();
+const IngredientDetails = () => {
+	const { data } = useSelector( (store: any) => store.ingredients);
+	let { id } = useParams<{ id: string }>();
 
-	const currentBurger = data.find((el) => el._id === id);	
+	const currentBurger = data.find((el: TIngredient) => el._id === id);	
 
   if (!currentBurger) {
     return (<Loader />)

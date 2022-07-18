@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import styles from './burgerelement.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { TIngredientsItem } from '../../types';
 
-function BurgerElement({ item, renderModal }) { 
+const BurgerElement: FC<TIngredientsItem> = ({ item }) => { 
 
-	const { counts, bun } = useSelector(store => store.ingredients.burgerIngredients);
+	const { counts, bun } = useSelector((store: any) => store.ingredients.burgerIngredients);
 	const count = (item.type === 'bun') && bun && bun._id === item._id ? 2 : counts[item._id] && counts[item._id];  
 
 	const elementCard = {
@@ -44,21 +44,6 @@ function BurgerElement({ item, renderModal }) {
       <p className={clsx('text', 'text_type_main-default')}>{item.name}</p>
     </li>
   )
-}
-
-BurgerElement.propTypes = {
-	item: PropTypes.shape({
-		_id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired,
-		proteins: PropTypes.number.isRequired,
-		fat: PropTypes.number.isRequired,
-		carbohydrates: PropTypes.number.isRequired,
-		calories: PropTypes.number.isRequired,
-		price: PropTypes.number.isRequired,
-		image: PropTypes.string.isRequired
-	}).isRequired,
-	renderModal: PropTypes.func.isRequired
 }
 
 export default BurgerElement;

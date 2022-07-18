@@ -1,7 +1,8 @@
-export const getCookie = (name) => {
+export const getCookie = (name: string) => {
   const matches = document.cookie.match(
     new RegExp(
       '(?:^|; )' +
+      // eslint-disable-next-line
       name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
       '=([^;]*)'
     )
@@ -9,7 +10,7 @@ export const getCookie = (name) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export const setCookie = (name, value, props) => {
+export const setCookie = (name: string, value: string | number | boolean, props: any = {}) => {
   props = {
     path: '/',
     ...props,
@@ -35,6 +36,6 @@ export const setCookie = (name, value, props) => {
   document.cookie = updatedCookie;
 };
 
-export const deleteCookie = (name) => {
-  setCookie(name, null, { expires: -1 });
+export const deleteCookie = (name: string) => {
+  setCookie(name, false, { expires: -1 });
 };

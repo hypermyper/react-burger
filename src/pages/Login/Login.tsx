@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, SyntheticEvent } from 'react';
 import clsx from 'clsx';
 import { Redirect, Link, useLocation } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { login } from '../../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { TLocationTemplate } from '../../types';
 
 function Login() {
 	const [state, setState] = useState({
@@ -12,26 +13,24 @@ function Login() {
 		password: ''
 	})
 
-	const userName = useSelector(store => store.auth.name);
+	const userName = useSelector( (store: any) => store.auth.name);
 
   const dispatch = useDispatch();
-	const location = useLocation();
+	const location = useLocation<TLocationTemplate>();
 
 	const inputRef = useRef(null);
 
-	const handleInputChange = (e) => {
+	const handleInputChange = (e: SyntheticEvent<HTMLInputElement>): void => {
+    const target = e.target as HTMLInputElement;
+    const value = target.value;
+    const name = target.name;  
 		setState({
 			...state,
-			[e.target.name]: e.target.value
+			[name]: value
 		});
 	}
 
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
-    alert('Icon Click Callback')
-  }
-
-  const submit = (e) => {
+  const submit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(login(state));
   };
@@ -59,7 +58,6 @@ function Login() {
 					ref={inputRef}
 					errorText={'Ошибка'}
 					size={'default'}
-					onIconClick={onIconClick}
 				/>
 				<PasswordInput
 					value={state.password}

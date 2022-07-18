@@ -1,19 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, FC, useRef } from 'react';
 import clsx from 'clsx';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgeringredients.module.css';
-import BurgerIngredientsSecton from '../../components/BurgerIngredientsSecton/BurgerIngredientsSection';
-import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
-import Modal from '../../components/Modal/Modal';
+import BurgerIngredientsSecton from '../BurgerIngredientsSecton/BurgerIngredientsSection';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import Modal from '../Modal/Modal';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { CURRENT_BURGER } from '../../services/actions/ingredients';
-import { OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/modal';
+import { OPEN_MODAL } from '../../services/actions/modal';
+import { TIngredient } from '../../types';
 
-function BurgerIngredients() {
+const BurgerIngredients: FC = () => {
 
-const filterArray = (arr) => {
-	return arr.reduce((acc, curr) =>
+const filterArray = (arr: Array<TIngredient>) => {
+	return arr.reduce((acc: any, curr: any) =>
 	({
 		...acc, [curr.type]: [...acc[curr.type] || [], curr]
 	}), {})
@@ -21,29 +22,31 @@ const filterArray = (arr) => {
 
   const dispatch = useDispatch();
 
-  const { data } = useSelector(store => store.ingredients);
-  const { currentBurger } = useSelector(store => store.ingredients);
+  const { data } = useSelector( (store: any) => store.ingredients);
+  const { currentBurger } = useSelector( (store: any) => store.ingredients);
   //  const { bun, sauce, main } = useSelector(store => store.ingredients.data);
   const { bun, sauce, main } = filterArray(data);
-  const { content, visible } = useSelector(store => store.modal);
+  const { content, visible } = useSelector( (store: any) => store.modal);
 
-  const rootRef = useRef(null);
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const rootRef = useRef<HTMLElement>(null);
+  const bunRef = useRef<HTMLHeadingElement>(null);
+  const sauceRef = useRef<HTMLHeadingElement>(null);
+  const mainRef = useRef<HTMLHeadingElement>(null);
 
-  const [current, setCurrent] = useState('bunIngredients');
+  const [current, setCurrent] = useState<string>('bunIngredients');
 
 	const handleOnScroll = () => {
-		const bunHeight = Math.abs(rootRef.current.getBoundingClientRect().top - bunRef.current.getBoundingClientRect().top)
-		const sauceHeight = Math.abs(rootRef.current.getBoundingClientRect().top - sauceRef.current.getBoundingClientRect().top)
-		const mainHeight = Math.abs(rootRef.current.getBoundingClientRect().top - mainRef.current.getBoundingClientRect().top)
-		const minHeight = Math.min(bunHeight, sauceHeight, mainHeight);
-		const currentHeader = minHeight === bunHeight ? 'bunIngredients' : minHeight === sauceHeight ? 'sauceIngredients' : 'mainIngredients';
-		setCurrent(prevState => (currentHeader === prevState.current ? prevState.current : currentHeader));
+    if (rootRef && bunRef && sauceRef && mainRef && rootRef.current && bunRef.current && sauceRef.current && mainRef.current) {    
+      const bunHeight = Math.abs(rootRef.current.getBoundingClientRect().top - bunRef.current.getBoundingClientRect().top)
+      const sauceHeight = Math.abs(rootRef.current.getBoundingClientRect().top - sauceRef.current.getBoundingClientRect().top)
+      const mainHeight = Math.abs(rootRef.current.getBoundingClientRect().top - mainRef.current.getBoundingClientRect().top)
+      const minHeight = Math.min(bunHeight, sauceHeight, mainHeight);
+      const currentHeader = minHeight === bunHeight ? 'bunIngredients' : minHeight === sauceHeight ? 'sauceIngredients' : 'mainIngredients';
+      setCurrent(prevState => (currentHeader === prevState ? prevState : currentHeader));
+    }
 	}  
 
-  const renderModal = (item) => {
+  const renderModal = (item: TIngredient) => {
     dispatch({
       type: CURRENT_BURGER,
       item
@@ -54,22 +57,28 @@ const filterArray = (arr) => {
     })
   }  
 
-  const onClose = () => {
+/*   const onClose = () => {
 		dispatch({
 			type: CLOSE_MODAL
 		})
-	}
+	} */
 
   const scrollIntoBun = () => {
-    bunRef.current.scrollIntoView({behavior: 'smooth'});
+    if (bunRef && bunRef.current) {      
+      bunRef.current.scrollIntoView({behavior: 'smooth'});
+    }
   }
 
   const scrollIntoSauce = () => {
-    sauceRef.current.scrollIntoView({behavior: 'smooth'});
+    if (sauceRef && sauceRef.current) {         
+      sauceRef.current.scrollIntoView({behavior: 'smooth'});
+    }
   }
 
   const scrollIntoMain = () => {
-    mainRef.current.scrollIntoView({behavior: 'smooth'});
+    if (mainRef && mainRef.current) {      
+      mainRef.current.scrollIntoView({behavior: 'smooth'});
+    }
   }
 
   return (
@@ -124,7 +133,7 @@ const filterArray = (arr) => {
           ref={mainRef}       
         />
       </section>   
-      {currentBurger && visible && <Modal onClose={onClose}>{content}</Modal>}           
+      {currentBurger && visible && <Modal>{content}</Modal>}           
     </section>
   )
 }

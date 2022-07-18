@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, SyntheticEvent } from 'react';
 import clsx from 'clsx';
 import { Redirect, Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,10 +16,13 @@ function Register() {
 
   const dispatch = useDispatch();	
 
-	const handleInputChange = e => {
+	const handleInputChange = (e: SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    const value = target.value;
+    const name = target.name;		
 		setState({
 			...state,
-			[e.target.name]: e.target.value
+			[name]: value
 		});
 	}
 
@@ -27,7 +30,7 @@ function Register() {
 		alert('Icon Click Callback')
 	}, [])
 
-  const submit = e => {
+  const submit = (e: SyntheticEvent)=> {
     e.preventDefault();
     dispatch(register(state));
   };

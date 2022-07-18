@@ -1,21 +1,23 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, FC } from 'react';
 import clsx from 'clsx';
 import { useSelector, useDispatch } from 'react-redux';
-import OrderDetails from '../OrderDetails/OrderDetails.js';
+//import OrderDetails from '../OrderDetails/OrderDetails.js';
 //import Modal from '../Modal/Modal';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerconstructor.module.css';
 import { createBurgerOrder, UPDATE_CONSTRUCTOR, DELETE_INGREDIENT, DECREASE_INGREDIENT } from '../../services/actions/ingredients';
-import DraggableElement from '../DraggableElement/DraggableElement.js';
+import DraggableElement from '../DraggableElement/DraggableElement';
 //import { OPEN_MODAL, CLOSE_MODAL} from '../../services/actions/modal';
 import { useDrop } from 'react-dnd';
 import { push } from 'connected-react-router';
-import { useLocation, useHistory, Redirect } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
+import { TProps, TIngredientWithProductId } from './types';
+import { TIngredient } from '../../types';
 
-function BurgerConstructor({ onDropHandler }) {
+const BurgerConstructor: FC<TProps> = ({ onDropHandler }) => {
 
-	const { bun, restBurgerIngredients } = useSelector(store => store.ingredients.burgerIngredients);
-  const { currentOrder } = useSelector(store => store.ingredients);	
+	const { bun, restBurgerIngredients } = useSelector((store: any) => store.ingredients.burgerIngredients);
+//  const { currentOrder } = useSelector((store: any) => store.ingredients);	
 //  const { content, visible } = useSelector(store => store.modal);
 
   const location = useLocation();
@@ -26,7 +28,7 @@ function BurgerConstructor({ onDropHandler }) {
 
 	const [{ canDrop, isHover }, dropTarget] = useDrop({
 		accept: "ingredient",
-		drop(itemId) {
+		drop(itemId: TIngredient) {
 			onDropHandler(itemId);
 		},
 		collect: monitor => ({
@@ -35,13 +37,13 @@ function BurgerConstructor({ onDropHandler }) {
 		})
 	});  
 
-  const priceTotal = (bun, restBurgerIngredients) => {
+  const priceTotal = (bun: TIngredientWithProductId, restBurgerIngredients: Array<TIngredientWithProductId>) => {
     const bunPrice = bun ? 2 * bun.price : 0;
-    const burgerPrice = restBurgerIngredients.reduce((acc, curr) => acc += curr.price, 0);
+    const burgerPrice = restBurgerIngredients.reduce((acc: any, curr: any) => acc += curr.price, 0);
       return bunPrice + burgerPrice;      
   }
 
-  const handleDeleteIngredient = (item) => {
+  const handleDeleteIngredient = (item: TIngredientWithProductId) => {
     console.log(item);
     dispatch({
       type: DELETE_INGREDIENT,
@@ -56,7 +58,7 @@ function BurgerConstructor({ onDropHandler }) {
 
 	const handleOpenModal = () => {
     if (hasToken) {
-      const ingredientsId = restBurgerIngredients.map(el => el._id);
+      const ingredientsId = restBurgerIngredients.map((el: TIngredientWithProductId) => el._id);
 
       dispatch(createBurgerOrder([bun._id, ...ingredientsId]));
 
@@ -122,7 +124,7 @@ function BurgerConstructor({ onDropHandler }) {
         }
         {restBurgerIngredients.length || bun ? '' : <Rules />}
         <ul className={clsx(styles.content, 'mt-4', 'mb-4')}>
-          {restBurgerIngredients.map((burger, i) => {
+          {restBurgerIngredients.map((burger: TIngredientWithProductId, i: number) => {
             return (
               <DraggableElement 
                 item={burger} 

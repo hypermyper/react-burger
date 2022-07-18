@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './draggableelement.module.css';
 import { useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
+import { XYCoord } from 'dnd-core';
+//import { TIngredient } from '../../types';
+import { TProps } from './types';
 
-function DraggableElement({ item, index, handleDeleteIngredient, moveElement }) {
-	const id = item._id
-	const ref = useRef(null);
+
+const DraggableElement: FC<TProps> = ({ item, index, handleDeleteIngredient, moveElement }) => {
+	const id = item._id;
+	const ref = useRef<HTMLLIElement>(null);
 	const [, drop] = useDrop({
 		accept: 'item',
 		collect(monitor) {
@@ -16,7 +19,7 @@ function DraggableElement({ item, index, handleDeleteIngredient, moveElement }) 
 				handlerId: monitor.getHandlerId(),
 			};
 		},
-		hover(item, monitor) {
+		hover(item: any, monitor: DropTargetMonitor) {
 			if (!ref.current) {
 				return;
 			}
@@ -30,7 +33,7 @@ function DraggableElement({ item, index, handleDeleteIngredient, moveElement }) 
 			const hoverBoundingRect = ref.current?.getBoundingClientRect();
 			const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 			const clientOffset = monitor.getClientOffset();
-			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+			const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
 			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
 				return
@@ -71,7 +74,7 @@ function DraggableElement({ item, index, handleDeleteIngredient, moveElement }) 
 	)
 }
 
-DraggableElement.propTypes = {
+/* DraggableElement.propTypes = {
 	item: PropTypes.shape({
 		_id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
@@ -80,6 +83,6 @@ DraggableElement.propTypes = {
 	index: PropTypes.number.isRequired,
 	handleDeleteIngredient: PropTypes.func.isRequired,
 	moveElement: PropTypes.func.isRequired,
-}
+} */
 
 export default DraggableElement;

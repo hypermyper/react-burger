@@ -7,7 +7,7 @@ import Loader from '../Loader/Loader';
 
 const OrderDetails = () => {
 
-  const { currentOrder, orderRequest } = useSelector(store => store.ingredients);	
+  const { currentOrder, orderRequest } = useSelector( (store: any) => store.ingredients);	
 
 	return (
 		<div className={clsx(styles.order, 'p-15')}>
