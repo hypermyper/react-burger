@@ -6,7 +6,7 @@ import styles from './orderstable.module.css';
 import { TOrder } from '../../types';
 
 function OrdersTable() {
-  const { total, totalToday, orders } = useSelector((store: any) => store.ws);
+  const { total, totalToday, orders } = useSelector((store) => store.ws);
   const statusArrays = filterOrdersByStatus(orders);
   const doneArray = statusArrays?.done.slice(0, 30);
 

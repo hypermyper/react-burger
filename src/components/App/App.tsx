@@ -6,7 +6,7 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import { Main, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, Feed, Order } from '../../pages';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { getBurgerIngredients } from '../../services/actions/ingredients';
 import { TLocationTemplate } from '../../types';
 
@@ -17,7 +17,7 @@ function App() {
 	const background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background; 
 
 	const dispatch = useDispatch();
-	const { loaded } = useSelector((store: any) => store.ingredients);
+	const { loaded } = useSelector((store) => store.ingredients);
 
 	useEffect(() => {
 		if (!loaded) {

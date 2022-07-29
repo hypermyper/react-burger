@@ -1,4 +1,4 @@
-import { TIngredient, TIngredientWithProductId, TOrder, TSetCookieProps } from "../types";
+import { TIngredient, TOrder, TSetCookieProps } from "../types";
 
 export const getCookie = (name: string) => {
   const matches = document.cookie.match(
@@ -47,14 +47,14 @@ export const getStatus = (status: string) => {
 }
 
 export const filterOrdersByStatus = (arr: Array<TOrder>) => {
-  return arr?.reduce((acc: { [name: string]: Array<TOrder> }, curr) => {
+  return arr.reduce((acc: { [name: string]: Array<TOrder> }, curr) => {
     curr.status === 'done' ? acc['done'] = [...acc['done'], curr] : acc['pending'] = [...acc['pending'], curr]
     return acc;
   }, { done: [], pending: [] })
 }
 
 export const filterOrders = (arr: Array<TOrder>, id: string) => {
-  return arr?.filter((el: TOrder) => el.number === Number(id))[0]
+  return arr.filter((el: TOrder) => el.number === Number(id))[0]
 }
 
 const getDaysForCard = (days: number) => (
@@ -75,17 +75,17 @@ export const conversionDateForCard = (date: string) => {
   return `${getDaysForCard(diffTime)}, ${hours}:${min} i-GMT+${dayCreated.getTimezoneOffset() * (-1) / 60}`;
 };
 
-export const getPrice = (arr: Array<TIngredient>) => arr?.reduce((acc: number, curr: TIngredient) => acc += curr.price, 0);
+export const getPrice = (arr: Array<TIngredient>) => arr.reduce((acc: number, curr: TIngredient) => acc += curr.price, 0);
 
 export const getBurgerIngredients = (arrIdBurgerIngredients: Array<string>, arrAllIngredients: Array<TIngredient>) => (
-  arrIdBurgerIngredients?.map((id: string) => (
-    arrAllIngredients.filter((item: TIngredient) => item._id === id))))?.flat()
+  arrIdBurgerIngredients.map((id) => (
+    arrAllIngredients.filter((item) => item._id === id)))).flat()
 
 type TGetBurgerIngredientsWithCountReduceAcc = {
   item: { [name: string]: TIngredient }, count: { [name: string]: number }
 }
 
-export const getBurgerIngredientsWithCount = (arr: Array<TIngredient>) => arr?.reduce(
+export const getBurgerIngredientsWithCount = (arr: Array<TIngredient>) => arr.reduce(
   (acc: TGetBurgerIngredientsWithCountReduceAcc, curr: TIngredient) => {
     const id = curr._id
     acc.item[id] = curr;

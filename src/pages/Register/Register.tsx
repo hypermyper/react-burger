@@ -2,7 +2,7 @@ import React, { useState, useCallback, SyntheticEvent, useEffect } from 'react';
 import clsx from 'clsx';
 import { Redirect, Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 import { register } from '../../services/actions/auth';
 
 import styles from './register.module.css';

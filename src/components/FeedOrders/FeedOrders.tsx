@@ -9,7 +9,7 @@ import Loader from '../Loader/Loader';
 
 function FeedOrders() {
   const location = useLocation();
-  const { orders } = useSelector((store: any) => store.ws || {});
+  const { orders } = useSelector((store) => store.ws || {});
 
   if (!orders) {
     return <Loader />

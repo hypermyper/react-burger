@@ -55,7 +55,7 @@ function Order() {
         Состав:
       </p>
       <ul className={clsx(styles.list, 'mb-10')}>
-        {currentOrder?.ingredients.map((el: string, i: number) => {
+        {currentOrder?.ingredients?.map((el: string, i: number) => {
           return <li className={clsx(styles['list-item'], 'mr-6')} key={i}>
             <div className={clsx(styles.icon, 'mr-4')}>
               <img src={allBurgerIngredients?.item[el]?.image_mobile} alt='React Burger' className={clsx(styles.image)} />

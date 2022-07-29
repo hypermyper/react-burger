@@ -8,7 +8,6 @@ import { TWSActionsAuthActions } from './services/actions/ws-actions-auth';
 import { TWSActionsActions } from './services/actions/ws-actions';
 
 type TApplicationActions = TAuthActions | TIngredientsActions | TWSActionsAuthActions | TWSActionsActions;
-//type TApplicationActions = TAuthActions | TIngredientsActions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -94,6 +93,7 @@ export type TOrder = {
 	number: number;
 	status: string;
 	updatedAt: string;
+	order: { number: number };	
 	_id: string;
 }
 

@@ -5,7 +5,7 @@ import Loader from '../../components/Loader/Loader';
 import BurgerIngredients from '../../components/BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstructor';
 import { addIngridients } from '../../services/actions/ingredients';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { INCREASE_INGREDIENT } from '../../services/actions/ingredients';
@@ -13,7 +13,7 @@ import { TIngredient, TIngredientWithProductId } from "../../types";
 
 function Main() {
 
-  const { isLoading, hasError, loaded } = useSelector( (store: any) => store.ingredients);
+  const { isLoading, hasError, loaded } = useSelector( (store) => store.ingredients);
 
   const dispatch = useDispatch();
 

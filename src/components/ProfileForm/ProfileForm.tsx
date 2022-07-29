@@ -2,14 +2,14 @@ import React, { useState, useEffect, SyntheticEvent } from 'react';
 import clsx from 'clsx';
 import styles from './profileform.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { updateUser } from '../../services/actions/auth';
 import Loader from '../Loader/Loader';
 
 function ProfileForm() {
-  const currentUserName = useSelector((store: any) => store.auth.name);
-  const currentUserEmail = useSelector((store: any) => store.auth.email);
-  const { updateUserRequest } = useSelector((store: any) => store.auth)
+  const currentUserName = useSelector((store) => store.auth.name);
+  const currentUserEmail = useSelector((store) => store.auth.email);
+  const { updateUserRequest } = useSelector((store) => store.auth)
   const dispatch = useDispatch();
 
   const [state, setState] = useState({

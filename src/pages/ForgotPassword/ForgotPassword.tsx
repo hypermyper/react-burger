@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { Link, Redirect } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPassword } from '../../services/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 import styles from './forgotpassword.module.css';
 
 function ForgotPassword() {

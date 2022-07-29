@@ -6,13 +6,13 @@ import ProfileNav from '../../components/ProfileNav/ProfileNav';
 import ProfileForm from '../../components/ProfileForm/ProfileForm';
 import ProfileOrders from '../../components/ProfileOrders/ProfileOrders';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { getUser } from '../../services/actions/auth';
 import Loader from '../../components/Loader/Loader';
 
 const Profile: FC = () => {
   const dispatch = useDispatch();
-  const { getUserRequest, getUserFailed } = useSelector((store: any) => store.auth);
+  const { getUserRequest, getUserFailed } = useSelector((store) => store.auth);
 
   useEffect(() => {
     dispatch(getUser());
