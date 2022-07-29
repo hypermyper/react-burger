@@ -1,14 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './ingredientdetails.module.css';
-//import { getIngredients } from '../../utils/api';
 import { useParams } from "react-router-dom";
 import Loader from '../Loader/Loader';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 import { TIngredient } from '../../types';
 
 const IngredientDetails = () => {
-	const { data } = useSelector( (store: any) => store.ingredients);
+	const { data } = useSelector( (store) => store.ingredients);
 	let { id } = useParams<{ id: string }>();
 
 	const currentBurger = data.find((el: TIngredient) => el._id === id);	

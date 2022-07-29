@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import styles from './profilenav.module.css';
 import { NavLink, useLocation } from 'react-router-dom';
 import { logout } from '../../services/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 
 const ProfileNav = () => {
   const { pathname } = useLocation();

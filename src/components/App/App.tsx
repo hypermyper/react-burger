@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 
 import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { Main, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound } from '../../pages';
+import { Main, Login, Register, ForgotPassword, ResetPassword, Profile, NotFound, Feed, Order } from '../../pages';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { getBurgerIngredients } from '../../services/actions/ingredients';
 import { TLocationTemplate } from '../../types';
 
@@ -17,14 +17,13 @@ function App() {
 	const background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background; 
 
 	const dispatch = useDispatch();
-	const { loaded } = useSelector((store: any) => store.ingredients);
+	const { loaded } = useSelector((store) => store.ingredients);
 
 	useEffect(() => {
 		if (!loaded) {
 			dispatch(getBurgerIngredients());
 		}	
 	}, [dispatch, loaded]);	
-
 
   return (
     <>
@@ -44,10 +43,19 @@ function App() {
 				</Route>
 				<Route path="/reset-password" exact={true}>
 					<ResetPassword />
-				</Route>       
+				</Route>     
+				<Route path='/feed' exact={true}>
+					<Feed />
+				</Route>
+				<Route path='/feed/:id'>
+					<Order />
+				</Route>			  
+				<ProtectedRoute path='/profile/orders/:id' exact={true}>
+					<Order />
+				</ProtectedRoute>		
 				<ProtectedRoute path='/profile'>
 					<Profile />
-				</ProtectedRoute> 
+				</ProtectedRoute> 									
 				<Route path='/ingredients/:id' exact={true}>
 					<IngredientDetails />
 				</Route>
@@ -56,11 +64,15 @@ function App() {
 				</Route>                
       </Switch>
 			{background &&
-				(<>
-					<Route path='/' exact={true} children={<Modal><OrderDetails /></Modal>} />
-					<Route path='/ingredients/:id' children={<Modal><IngredientDetails /></Modal>} />
-				</>
-				)}  
+				(
+					<>
+						<Route path='/' exact={true} children={<Modal><OrderDetails /></Modal>} />
+						<Route path='/ingredients/:id' render={() => <Modal><IngredientDetails /></Modal>} />
+						<ProtectedRoute path='/profile/orders/:id' children={<Modal><Order /></Modal>} />
+						<Route path='/feed/:id' render={() => <Modal><Order /></Modal>} />					
+					</>
+				)
+			}  
     </>            
   );
 }

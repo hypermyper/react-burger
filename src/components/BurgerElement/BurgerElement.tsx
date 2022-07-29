@@ -2,13 +2,13 @@ import React, { FC } from 'react';
 import clsx from 'clsx';
 import styles from './burgerelement.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 import { useDrag } from 'react-dnd';
 import { TIngredientsItem } from '../../types';
 
 const BurgerElement: FC<TIngredientsItem> = ({ item }) => { 
 
-	const { counts, bun } = useSelector((store: any) => store.ingredients.burgerIngredients);
+	const { counts, bun } = useSelector((store) => store.ingredients.burgerIngredients);
 	const count = (item.type === 'bun') && bun && bun._id === item._id ? 2 : counts[item._id] && counts[item._id];  
 
 	const elementCard = {

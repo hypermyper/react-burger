@@ -74,15 +74,4 @@ const DraggableElement: FC<TProps> = ({ item, index, handleDeleteIngredient, mov
 	)
 }
 
-/* DraggableElement.propTypes = {
-	item: PropTypes.shape({
-		_id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		price: PropTypes.number.isRequired,
-	}).isRequired,
-	index: PropTypes.number.isRequired,
-	handleDeleteIngredient: PropTypes.func.isRequired,
-	moveElement: PropTypes.func.isRequired,
-} */
-
 export default DraggableElement;

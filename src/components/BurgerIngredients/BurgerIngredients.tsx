@@ -6,7 +6,7 @@ import BurgerIngredientsSecton from '../BurgerIngredientsSecton/BurgerIngredient
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import Modal from '../Modal/Modal';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { CURRENT_BURGER } from '../../services/actions/ingredients';
 import { OPEN_MODAL } from '../../services/actions/modal';
 import { TIngredient } from '../../types';
@@ -22,11 +22,11 @@ const filterArray = (arr: Array<TIngredient>) => {
 
   const dispatch = useDispatch();
 
-  const { data } = useSelector( (store: any) => store.ingredients);
-  const { currentBurger } = useSelector( (store: any) => store.ingredients);
+  const { data } = useSelector( (store) => store.ingredients);
+  const { currentBurger } = useSelector( (store) => store.ingredients);
   //  const { bun, sauce, main } = useSelector(store => store.ingredients.data);
   const { bun, sauce, main } = filterArray(data);
-  const { content, visible } = useSelector( (store: any) => store.modal);
+  const { content, visible } = useSelector( (store) => store.modal);
 
   const rootRef = useRef<HTMLElement>(null);
   const bunRef = useRef<HTMLHeadingElement>(null);

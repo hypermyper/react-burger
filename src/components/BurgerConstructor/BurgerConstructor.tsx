@@ -1,6 +1,6 @@
 import React, { useCallback, FC } from 'react';
 import clsx from 'clsx';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 //import OrderDetails from '../OrderDetails/OrderDetails.js';
 //import Modal from '../Modal/Modal';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,9 +16,7 @@ import { TIngredient } from '../../types';
 
 const BurgerConstructor: FC<TProps> = ({ onDropHandler }) => {
 
-	const { bun, restBurgerIngredients } = useSelector((store: any) => store.ingredients.burgerIngredients);
-//  const { currentOrder } = useSelector((store: any) => store.ingredients);	
-//  const { content, visible } = useSelector(store => store.modal);
+	const { bun, restBurgerIngredients } = useSelector((store) => store.ingredients.burgerIngredients);
 
   const location = useLocation();
   const history = useHistory();
@@ -60,9 +58,11 @@ const BurgerConstructor: FC<TProps> = ({ onDropHandler }) => {
     if (hasToken) {
       const ingredientsId = restBurgerIngredients.map((el: TIngredientWithProductId) => el._id);
 
-      dispatch(createBurgerOrder([bun._id, ...ingredientsId]));
+      const bunId: string = bun ? bun._id : '';
 
-      console.log(ingredientsId, bun._id);
+      dispatch(createBurgerOrder([bunId, ...ingredientsId]));
+
+      console.log(ingredientsId, bunId);
 
 /*       dispatch({
         type: OPEN_MODAL,

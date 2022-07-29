@@ -1,11 +1,4 @@
 import React, { FC } from 'react';
-import clsx from 'clsx';
-import styles from './navitem.module.css';
-
-type TProps = {
-    icon?: React.FC,
-    title: string;
-}
 
 const NavItem = ( icon: React.FC, title: string ) => {
     return (
@@ -15,10 +8,5 @@ const NavItem = ( icon: React.FC, title: string ) => {
       </>
     );
 }
-
-/* NavItem.propTypes = {
-  icon: PropTypes.element.isRequired,
-  title: PropTypes.string.isRequired
-} */
 
 export default NavItem;

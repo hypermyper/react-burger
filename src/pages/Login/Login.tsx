@@ -1,19 +1,24 @@
-import React, { useState, useRef, SyntheticEvent } from 'react';
+import React, { useState, useRef, SyntheticEvent, useEffect } from 'react';
 import clsx from 'clsx';
 import { Redirect, Link, useLocation } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { login } from '../../services/actions/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { TLocationTemplate } from '../../types';
 
 function Login() {
+
+  useEffect(() => {
+    document.title = 'Авторизация';
+  });	
+
 	const [state, setState] = useState({
 		login: '',
 		password: ''
 	})
 
-	const userName = useSelector( (store: any) => store.auth.name);
+	const userName = useSelector( (store) => store.auth.name);
 
   const dispatch = useDispatch();
 	const location = useLocation<TLocationTemplate>();

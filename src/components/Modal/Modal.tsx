@@ -23,9 +23,9 @@ const Modal: FC = ({ children }) => {
 
 	useEffect(() => {
 		window.addEventListener('keydown', onCloseEsc)
-		return () => {
-			window.removeEventListener('keydown', onCloseEsc)
-		}
+			return () => {
+				window.removeEventListener('keydown', onCloseEsc)
+			}
 	});
 
 	return modalRoot && ReactDOM.createPortal((
