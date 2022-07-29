@@ -18,17 +18,53 @@ export const getIngredients = () => {
 }
 
 export const createOrder = (ingredients: Array<string>) => {
-  return fetch(`${API_URL}orders`, {
+//  return fetch(`${API_URL}orders`, {
+  return fetchWithRefreshToken(`${API_URL}orders`, {
     method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',    
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('token'),      
+    },
+    body: JSON.stringify(
+      { ingredients },      
+    ),
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer'    
+  })
+} 
+
+export const getOrderRequest = (number: string) => {
+  return fetch(`${API_URL}orders/${number}`, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(
-      { ingredients }
-    )
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
   })
   .then((res) => checkResponse(res));
-} 
+};
+
+export const getUserOrderRequest = (number: string) => {
+  return fetchWithRefreshToken(`${API_URL}orders/${number}`, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('token'),      
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  })
+};
 
 export const signInRequest = ({ login, password }: TUserData) => {
   return fetch(`${API_URL}auth/login`, {
@@ -186,7 +222,7 @@ export const refreshTokenRequest = () => {
   .then((res) => checkResponse(res));
 };
 
-const fetchWithRefreshToken = (url: string, options: RequestInit) => {
+/* const fetchWithRefreshToken = (url: string, options: RequestInit) => {
   return fetch(url, options)
   .then((res) => {
       return res.ok ? res : Promise.reject(res)
@@ -215,9 +251,52 @@ const fetchWithRefreshToken = (url: string, options: RequestInit) => {
     })
 }
 
+*/
+
 const checkResponse = (res: Response) => {
+  if (res.ok) {
+    return res.json();
+  }
+    if (res.status === 401) {
+      return Promise.reject(`Ошибка ${res.status}. Введены неверные данные`);
+    } else if (res.status === 403) {
+      return Promise.reject(`Ошибка ${res.status}. У вас недостаточно прав для просмотра содержимого`);
+    } else {
+      return Promise.reject(`Ошибка ${res.status}. На сервере произошла ошибка. Попробуйте позже`);
+    }
+};
+
+
+const fetchWithRefreshToken = (url: string, options: RequestInit) => {
+  return fetch(url, options).then((res) => checkResponse(res))
+    .catch((res: Response) => {
+      return res.json()
+        .then((err: TError) => {
+          console.log(err)
+          if (err?.message === 'jwt expired') {
+            return refreshTokenRequest()
+              .then(res => {
+                localStorage.setItem('refreshToken', res.refreshToken)
+                const authToken = res.accessToken.split('Bearer ')[1];
+                setCookie('token', authToken);
+                (options.headers as { [key: string]: string }).Authorization = res.accessToken
+                return fetch(url, options).then((res) => checkResponse(res))
+              })
+          } else {
+            deleteCookie('token');
+            localStorage.removeItem('refreshToken');
+            // eslint-disable-next-line
+            location.reload()
+            return Promise.reject(err)
+          }
+        })
+    })
+}
+
+/* const checkResponse = (res: Response) => {
 	if (res.ok) {
 		return res.json();
 	}
 	return Promise.reject(res.status);
 }
+*/

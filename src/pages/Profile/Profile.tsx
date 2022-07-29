@@ -4,6 +4,7 @@ import styles from './profile.module.css';
 import { Switch, Route } from 'react-router-dom';
 import ProfileNav from '../../components/ProfileNav/ProfileNav';
 import ProfileForm from '../../components/ProfileForm/ProfileForm';
+import ProfileOrders from '../../components/ProfileOrders/ProfileOrders';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../services/actions/auth';
@@ -17,6 +18,10 @@ const Profile: FC = () => {
     dispatch(getUser());
   }, [dispatch]);
 
+  useEffect(() => {
+    document.title = 'Личный кабинет';
+  });    
+  
   if (getUserRequest) {
     //console.log(getUserRequest);
     return (<Loader />)
@@ -26,6 +31,7 @@ const Profile: FC = () => {
     console.log(getUserFailed);
   }
 
+
   return (
     <div className={clsx(styles.main, 'pt-10', 'pl-10', 'pr-10', 'mt-10')}>
       <ProfileNav />
@@ -34,8 +40,8 @@ const Profile: FC = () => {
           <ProfileForm />
         </Route>
         <Route path='/profile/orders' exact={true}>
-          <p className={clsx('text', 'text_type_main-default')}>История заказов</p>
-        </Route>
+          <ProfileOrders />
+        </Route>       
       </Switch>      
     </div>
   );

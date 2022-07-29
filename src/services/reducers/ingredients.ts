@@ -11,10 +11,35 @@ import {
 	UPDATE_CONSTRUCTOR,
 	CREATE_ORDER_REQUEST,
 	CREATE_ORDER_SUCCESS,
-	CREATE_ORDER_FAILED
+	CREATE_ORDER_FAILED,
+  GET_ORDER_REQUEST,
+  GET_ORDER_SUCCESS,
+  GET_ORDER_FAILED,
+  GET_USER_ORDER_REQUEST,
+  GET_USER_ORDER_SUCCESS,
+  GET_USER_ORDER_FAILED	
 } from '../actions/ingredients';
 
-const initialState = {
+import { TIngredient, TBurgerIngredients, TOrder, TOrderInfo } from '../../types';
+import { TIngredientsActions } from '../actions/ingredients';
+
+export type TIngredientsState = {
+  isLoading: boolean;
+  hasError: boolean;
+  loaded: boolean;
+  data: Array<TIngredient>;
+  burgerIngredients: TBurgerIngredients;
+	burgerBuns: null;
+	burgerCounts: Array<string>;
+  currentOrder: null | TOrder;
+  createOrder: null | TOrderInfo;
+	currentBurger: null | TIngredient;
+  orderRequest: boolean;
+  orderFailed: boolean;
+  orderLoaded: boolean;
+};
+
+const initialState: TIngredientsState = {
 	isLoading: false,
 	hasError: false,
 	loaded: false,
@@ -30,9 +55,11 @@ const initialState = {
 	currentBurger: null,
 	orderRequest: false,
 	orderFailed: false,
+	createOrder: null,
+	orderLoaded: false
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
 	switch (action.type) {
 		case GET_PRODUCTS_REQUEST: {
 			return {
@@ -151,6 +178,55 @@ export const ingredientsReducer = (state = initialState, action) => {
 				}
 			}
 		}
+    case GET_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderRequest: true,
+        orderFailed: false,
+        orderLoaded: false
+      };
+    }
+    case GET_ORDER_SUCCESS: {
+      return {
+        ...state,
+        orderFailed: false,
+        currentOrder: action.order,
+        orderRequest: false,
+        orderLoaded: true
+      };
+    }
+    case GET_ORDER_FAILED: {
+      return { 
+				...state, 
+				orderFailed: true, 
+				orderRequest: false 
+			};
+    }
+    case GET_USER_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderRequest: true,
+        orderFailed: false,
+        orderLoaded: false
+      };
+    }
+    case GET_USER_ORDER_SUCCESS: {
+      const data = action.order ? action.order : null
+      return {
+        ...state,
+        orderFailed: false,
+        currentOrder: data,
+        orderRequest: false,
+        orderLoaded: true
+      };
+    }
+    case GET_USER_ORDER_FAILED: {
+      return { 
+				...state, 
+				orderFailed: true, 
+				orderRequest: false 
+			};
+    }		
 		default: {
 			return state;
 		}

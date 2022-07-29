@@ -1,4 +1,4 @@
-import React, { useState, useCallback, SyntheticEvent } from 'react';
+import React, { useState, useCallback, SyntheticEvent, useEffect } from 'react';
 import clsx from 'clsx';
 import { Redirect, Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -34,6 +34,10 @@ function Register() {
     e.preventDefault();
     dispatch(register(state));
   };
+
+  useEffect(() => {
+    document.title = 'Регистрация';
+  });  	
 
   if (localStorage.getItem('refreshToken')) {
     return (

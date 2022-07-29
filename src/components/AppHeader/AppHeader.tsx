@@ -19,7 +19,7 @@ function AppHeader() {
                 </NavLink>
               </li>
               <li className={styles.nav__item_li}>
-                <NavLink exact to='/' className={clsx(styles.link, 'pt-4', 'pb-4', 'pr-5', 'pl-5')} activeClassName={styles.link_active}>                
+                <NavLink exact to='/feed' className={clsx(styles.link, 'pt-4', 'pb-4', 'pr-5', 'pl-5')} activeClassName={styles.link_active}>                
                   <ListIcon type="secondary" />
                   <span className={clsx('ml-2')}>Лента заказов</span>
                 </NavLink>

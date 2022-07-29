@@ -113,6 +113,10 @@ function ProfileForm() {
     });
   };
 
+  useEffect(() => {
+    document.title = 'Профиль / Личный кабинет';
+  });    
+
   if (updateUserRequest) {
     return (<Loader />)
   }

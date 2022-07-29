@@ -1,4 +1,4 @@
-import React, { useState, useRef, SyntheticEvent } from 'react';
+import React, { useState, useRef, SyntheticEvent, useEffect } from 'react';
 import clsx from 'clsx';
 import { Link, Redirect } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -33,6 +33,10 @@ function ForgotPassword() {
 			setErrorEmailText('Пустой email');
     }
 	};
+
+  useEffect(() => {
+    document.title = 'Восстановление пароля';
+  });  	
 
   if (localStorage.getItem('refreshToken')) {
     return (

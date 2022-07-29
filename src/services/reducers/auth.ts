@@ -27,7 +27,45 @@ import {
   REFRESH_TOKEN_FAILED
 } from '../actions/auth';
 
-const initialState = {
+import { TAuthActions } from '../actions/auth';
+
+export type TAuthState = {
+  name: string,
+  email: string,
+  password: string,
+
+  registerRequest: boolean,
+  registerFailed: boolean,
+
+  loginRequest: boolean,
+  loginFailed: boolean,
+
+  updateUserRequest: boolean,
+  updateUserFailed: boolean,
+
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+
+  getUserRequest: boolean,
+  getUserFailed: boolean,
+
+  forgotPasswordRequest: boolean,
+  forgotPasswordFailed: boolean,
+
+  isforgotPasswordRequest: boolean,
+  isforgotPasswordSuccess: boolean,
+
+  resetPasswordRequest: boolean,
+  resetPasswordFailed: boolean,
+
+  resetPasswordSuccess: boolean,
+  resetPasswordError: string,
+
+  isTokenUpdated: boolean,
+  tokenUpdateDate: boolean,
+}
+
+const initialState: TAuthState = {
   name: '',
   email: '',
   password: '',
@@ -56,11 +94,14 @@ const initialState = {
   resetPasswordRequest: false,
   resetPasswordFailed: false,
 
+  resetPasswordSuccess: false,
+  resetPasswordError: '',
+
   isTokenUpdated: false,
-  tokenUpdateDate: null,
+  tokenUpdateDate: false,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
     case REGISTER_REQUEST: {
       return {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import styles from './main.module.css';
 import Loader from '../../components/Loader/Loader';
@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { INCREASE_INGREDIENT } from '../../services/actions/ingredients';
-import { TIngredient } from "../../types";
+import { TIngredient, TIngredientWithProductId } from "../../types";
 
 function Main() {
 
@@ -25,6 +25,10 @@ function Main() {
       typeItem: item.type
     })
   };    
+
+  useEffect(() => {
+    document.title = 'React Burger – оформите заказ';
+  });  
 
   return (
     <main className={clsx('pl-10 pr-10', styles.main)}>

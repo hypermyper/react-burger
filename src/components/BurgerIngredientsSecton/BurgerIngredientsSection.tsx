@@ -33,22 +33,4 @@ const BurgerIngredientsSecton = forwardRef<HTMLHeadingElement, TIngredientRef>((
   )
 });
 
-/* BurgerIngredientsSecton.propTypes = {
-  title: PropTypes.string.isRequired,
-	array: PropTypes.arrayOf(PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired
-    }).isRequired),  
-  type: PropTypes.string.isRequired,
-  renderModal: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-} */
-
 export default BurgerIngredientsSecton;
