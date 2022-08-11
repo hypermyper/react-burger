@@ -42,10 +42,8 @@ describe('ingredients reducer', () => {
 				type: GET_PRODUCTS_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			data: [],
+			...initialState,
 			isLoading: true,
-			hasError: false,
-			loaded: false,
 		}))
 	})
 
@@ -56,9 +54,8 @@ describe('ingredients reducer', () => {
 				items: data
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			data: data,
-			isLoading: false,
-			hasError: false,
 			loaded: true,
 		}))
 	})
@@ -69,10 +66,8 @@ describe('ingredients reducer', () => {
 				type: GET_PRODUCTS_FAILED,
 			})
 		).toEqual(expect.objectContaining({
-			data: [],
-			isLoading: false,
+			...initialState,			
 			hasError: true,
-			loaded: false,
 		}))
 	})
 
@@ -82,9 +77,8 @@ describe('ingredients reducer', () => {
 				type: CREATE_ORDER_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			currentOrder: null,
+			...initialState,			
 			orderRequest: true,
-			orderFailed: false,
 		}))
 	})
 
@@ -100,14 +94,13 @@ describe('ingredients reducer', () => {
 				}
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			currentOrder: {
 				name: "Space флюоресцентный бургер",
 				order: { number: 4345 },
 				success: true,
 				__proto__: Object
 			},
-			orderRequest: false,
-			orderFailed: false,
 		}))
 	})
 
@@ -117,8 +110,7 @@ describe('ingredients reducer', () => {
 				type: CREATE_ORDER_FAILED
 			})
 		).toEqual(expect.objectContaining({
-			currentOrder: null,
-			orderRequest: false,
+			...initialState,			
 			orderFailed: true,
 		}))
 	})
@@ -129,10 +121,8 @@ describe('ingredients reducer', () => {
 				type: GET_ORDER_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			currentOrder: null,
+			...initialState,			
 			orderRequest: true,
-			orderFailed: false,
-			orderLoaded: false
 		}))
 	})
 
@@ -143,10 +133,8 @@ describe('ingredients reducer', () => {
 				order: null
 			})
 		).toEqual(expect.objectContaining({
-			currentOrder: null,
-			orderRequest: false,
-			orderFailed: false,
-			orderLoaded: true
+			...initialState,			
+			orderLoaded: true,
 		}))
 		expect(
 			ingredientsReducer(initialState, {
@@ -163,6 +151,7 @@ describe('ingredients reducer', () => {
 				}
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			currentOrder: {
 				_id: "60da447273a639001a192d24",
 				owner: "60d72a588425d0001ba63f20",
@@ -173,9 +162,7 @@ describe('ingredients reducer', () => {
 				updatedAt: "2021-06-30T11:09:54.054Z",
 				__v: 0,
 			},
-			orderRequest: false,
-			orderFailed: false,
-			orderLoaded: true
+			orderLoaded: true,
 		}))
 	})
 
@@ -185,6 +172,7 @@ describe('ingredients reducer', () => {
 				type: GET_ORDER_FAILED
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			currentOrder: null,
 			orderRequest: false,
 			orderFailed: true,
@@ -197,10 +185,8 @@ describe('ingredients reducer', () => {
 				type: GET_USER_ORDER_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			currentOrder: null,
+			...initialState,
 			orderRequest: true,
-			orderFailed: false,
-			orderLoaded: false
 		}))
 	})
 
@@ -211,10 +197,8 @@ describe('ingredients reducer', () => {
 				order: null
 			})
 		).toEqual(expect.objectContaining({
-			currentOrder: null,
-			orderRequest: false,
-			orderFailed: false,
-			orderLoaded: true
+			...initialState,			
+			orderLoaded: true,
 		}))
 		expect(
 			ingredientsReducer(initialState, {
@@ -231,6 +215,7 @@ describe('ingredients reducer', () => {
 				}
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			currentOrder: {
 				_id: "60da447273a639001a192d24",
 				owner: "60d72a588425d0001ba63f20",
@@ -241,9 +226,7 @@ describe('ingredients reducer', () => {
 				updatedAt: "2021-06-30T11:09:54.054Z",
 				__v: 0,
 			},
-			orderRequest: false,
-			orderFailed: false,
-			orderLoaded: true
+			orderLoaded: true,
 		}))
 	})
 
@@ -253,8 +236,7 @@ describe('ingredients reducer', () => {
 				type: GET_USER_ORDER_FAILED
 			})
 		).toEqual(expect.objectContaining({
-			currentOrder: null,
-			orderRequest: false,
+			...initialState,			
 			orderFailed: true,
 		}))
 	})

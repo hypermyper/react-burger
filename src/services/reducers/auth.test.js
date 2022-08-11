@@ -76,12 +76,8 @@ describe('auth reducer', () => {
 				type: REGISTER_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
-			registerRequest: true,
-			registerFailed: false
+			...initialState,
+			registerRequest: true,	
 		}))
 	})
 
@@ -95,12 +91,9 @@ describe('auth reducer', () => {
 				},
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,
 			name: 'Test',
 			email: 'test@test.ts',
-			password: '',
-
-			registerRequest: false,
-			registerFailed: false,
 		}))
 	})
 
@@ -110,12 +103,8 @@ describe('auth reducer', () => {
 				type: REGISTER_FAILED
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
-			registerRequest: false,
-			registerFailed: true
+			...initialState,
+			registerFailed: true,
 		}))
 	})
 
@@ -125,12 +114,8 @@ describe('auth reducer', () => {
 				type: LOGIN_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
+			...initialState,
 			loginRequest: true,
-			loginFailed: false
 		}))
 	})
 
@@ -144,12 +129,9 @@ describe('auth reducer', () => {
 				},
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			name: 'Test',
 			email: 'test@test.ts',
-			password: '',
-
-			loginRequest: false,
-			loginFailed: false
 		}))
 	})
 
@@ -159,12 +141,8 @@ describe('auth reducer', () => {
 				type: LOGIN_FAILED
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
-			loginRequest: false,
-			loginFailed: true
+			...initialState,
+			loginFailed: true,
 		}))
 	})
 
@@ -174,12 +152,8 @@ describe('auth reducer', () => {
 				type: GET_USER_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
+			...initialState,
 			getUserRequest: true,
-			getUserFailed: false
 		}))
 	})
 
@@ -193,12 +167,9 @@ describe('auth reducer', () => {
 				},
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			name: 'Test',
 			email: 'test@test.ts',
-			password: '',
-
-			getUserRequest: false,
-			getUserFailed: false,
 		}))
 	})
 
@@ -208,11 +179,7 @@ describe('auth reducer', () => {
 				type: GET_USER_FAILED
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
-			getUserRequest: false,
+			...initialState,
 			getUserFailed: true,
 		}))
 	})
@@ -223,12 +190,8 @@ describe('auth reducer', () => {
 				type: UPDATE_USER_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
+			...initialState,
 			updateUserRequest: true,
-			updateUserFailed: false
 		}))
 	})
 
@@ -242,12 +205,9 @@ describe('auth reducer', () => {
 				},
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			name: 'Test',
 			email: 'test@test.ts',
-			password: '',
-
-			updateUserRequest: false,
-			updateUserFailed: false,
 		}))
 	})
 
@@ -257,12 +217,8 @@ describe('auth reducer', () => {
 				type: UPDATE_USER_FAILED
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
-			updateUserRequest: false,
-			updateUserFailed: true
+			...initialState,
+			updateUserFailed: true,
 		}))
 	})
 
@@ -272,11 +228,8 @@ describe('auth reducer', () => {
 				type: FORGOT_PASSWORD_REQUEST
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			forgotPasswordRequest: true,
-			forgotPasswordFailed: false,
-
-			isforgotPasswordRequest: false,
-			isforgotPasswordSuccess: false,
 		}))
 	})
 
@@ -286,9 +239,7 @@ describe('auth reducer', () => {
 				type: FORGOT_PASSWORD_SUCCESS,
 			})
 		).toEqual(expect.objectContaining({
-			forgotPasswordRequest: false,
-			forgotPasswordFailed: false,
-
+			...initialState,
 			isforgotPasswordRequest: true,
 			isforgotPasswordSuccess: true,
 		}))
@@ -300,11 +251,9 @@ describe('auth reducer', () => {
 				type: FORGOT_PASSWORD_FAILED
 			})
 		).toEqual(expect.objectContaining({
-			forgotPasswordRequest: false,
+			...initialState,
 			forgotPasswordFailed: true,
-
 			isforgotPasswordRequest: true,
-			isforgotPasswordSuccess: false,
 		}))
 	})
 
@@ -338,12 +287,8 @@ describe('auth reducer', () => {
 				type: LOGOUT_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
+			...initialState,
 			logoutRequest: true,
-			logoutFailed: false,
 		}))
 	})
 
@@ -361,11 +306,7 @@ describe('auth reducer', () => {
 				type: LOGOUT_FAILED
 			})
 		).toEqual(expect.objectContaining({
-			name: '',
-			email: '',
-			password: '',
-
-			logoutRequest: false,
+			...initialState,
 			logoutFailed: true,
 		}))
 	})
@@ -384,6 +325,7 @@ describe('auth reducer', () => {
 				type: REFRESH_TOKEN_SUCCESS
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			isTokenUpdated: true,
 			tokenUpdateDate: true,
 		}))
@@ -395,8 +337,8 @@ describe('auth reducer', () => {
 				type: REFRESH_TOKEN_FAILED
 			})
 		).toEqual(expect.objectContaining({
+			...initialState,			
 			isTokenUpdated: true,
-			tokenUpdateDate: false,
 		}))
 	})
 })
